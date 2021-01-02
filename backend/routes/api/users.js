@@ -9,10 +9,25 @@ const { User } = require('../../db/models');
 const router = express.Router();
 
 const validateSignup = [
+  check('Name')
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide aName")
+    .isLength({ max: 50 })
+    .withMessage("Name must not exceed 50 Characters"),
   check('email')
     .exists({ checkFalsy: true })
+    .withMessage('Please provide a valid email')
     .isEmail()
-    .withMessage('Please provide a valid email.'),
+    .withMessage("Invalid email address")
+    .custom((value) => {
+      return db.User.findOne({ where: { email: value } }).then((user) => {
+        if (user) {
+          return Promise.reject(
+            "The provided Email Address is already in use"
+          );
+        }
+      });
+    }),
   check('username')
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
@@ -30,8 +45,8 @@ router.post(
   '/',
   validateSignup,
   asyncHandler(async (req, res) => {
-    const { email, password, username } = req.body;
-    const user = await User.signup({ email, username, password });
+    const { name, email, password, username } = req.body;
+    const user = await User.signup({ name, email, username, password });
 
     await setTokenCookie(res, user);
 
