@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     guestId: {
       type: DataTypes.INTEGER,
-      allowNull: type,
+      allowNull: false,
     },
     listingId: {
       type: DataTypes.INTEGER,
-      allowNull: type,
+      allowNull: false,
     },
   }, {});
   TreehouseReview.associate = function (models) {

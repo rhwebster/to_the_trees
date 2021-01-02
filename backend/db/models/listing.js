@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     lat: {
-      type: DataTypes.FLOAT(10, 6),
+      type: DataTypes.FLOAT(10,6),
       allowNull: false,
     },
     lon: {
-      type: DataTypes.FLOAT(10, 6),
+      type: DataTypes.FLOAT(10,6),
       allowNull: false,
     },
     picUrl: {
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     Listing.belongsTo(models.User, { foreignKey: "userId" });
     Listing.hasMany(models.Reservation, { foreignKey: "listingId" });
     Listing.hasMany(models.TreehouseReview, { foreignKey: "listingId" });
-    Listing.belongsToMany(models.Favorite, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });
+    Listing.belongsToMany(models.User, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });
   };
   return Listing;
 };

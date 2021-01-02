@@ -25,11 +25,11 @@ module.exports = {
         allowNull: false,
       },
       lat: {
-        type: Sequelize.FLOAT(10, 6),
+        type: Sequelize.FLOAT(10,6),
         allowNull: false,
       },
       lon: {
-        type: Sequelize.FLOAT(10, 6),
+        type: Sequelize.FLOAT(10,6),
         allowNull: false,
       },
       picUrl: {
