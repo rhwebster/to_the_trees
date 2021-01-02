@@ -6,15 +6,34 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
+      },
+      name: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      address1: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      address2: {
+        type: Sequelize.STRING(100)
+      },
+      address3: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      profilePicUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       username: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
       email: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(256),
         allowNull: false,
         unique: true,
       },
@@ -31,10 +50,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
-      },
+      }
     });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Users');
-  },
+  }
 };
