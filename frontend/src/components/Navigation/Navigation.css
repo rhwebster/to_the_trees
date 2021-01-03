@@ -1,3 +1,12 @@
 .profile-dropdown {
   position: absolute;
 }
+
+#nav-bar {
+  background-color: lightblue;
+  margin: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

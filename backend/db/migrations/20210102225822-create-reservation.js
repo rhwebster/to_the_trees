@@ -30,13 +30,19 @@ module.exports = {
         allowNull: false,
         references: { model: "Users", key: "id" },
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.STRING(15),
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
       }
     });
   },

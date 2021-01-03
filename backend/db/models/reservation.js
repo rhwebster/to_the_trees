@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.STRING(15),
+    }
   }, {});
   Reservation.associate = function (models) {
     Reservation.belongsTo(models.User, { foreignKey: "guestId" });

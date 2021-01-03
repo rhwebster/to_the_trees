@@ -1,20 +1,18 @@
 const express = require("express");
 const asyncHandler = require('express-async-handler');
-const { restoreUser } = require('../../utils/auth');
-const db = require('../../db/models');
+const { Listing, Reservation } = require('../../db/models')
 const { Op } = require('sequelize');
 
 const router = express.Router();
 
-const { Listing } = require('../../db/models');
+router.get("/", asyncHandler(async (req, res, next) => {
+    const listings = await Listing.findAll();
+    res.json({ listings: listings });
+}));
 
-router.get("/", async (req, res) => {
-    try {
-        const listings = await Listing.findAll();
-        res.json({ listings: listings });
-    } catch (e) {
-        next(e);
-    }
-})
+// router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+//     const listing = await Listing.findByPK(req.params.id);
+//     res.json({listing: listing});
+// }))
 
 module.exports = router;
