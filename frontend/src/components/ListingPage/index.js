@@ -11,6 +11,7 @@ import Spruce from './spruce.jpeg';
 import Montana from './montana.jpg';
 import SanJose from './sanjose.jpg'
 import { NavLink } from 'react-router-dom'
+import { DateRangePicker } from 'react-dates';
 import { fetch } from '../../store/csrf';
 import './index.css';
 
@@ -69,9 +70,6 @@ const ListingPage = () => {
         setErrors(newErrors);
     }
 
-
-   
-
         return (
             <>
                 <div className="listing-page-header"
@@ -97,8 +95,13 @@ const ListingPage = () => {
                 <button 
                     className="button"
                     onClick={handleClick} >
-                        Reserve
+                        Reserve Now
                 </button>
+                <button
+                    className="button"
+                    onClick={handleClick}>
+                        Leave a Review
+                    </button>
             </>
         );
 };
