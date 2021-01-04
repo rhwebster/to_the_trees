@@ -9,11 +9,16 @@ const { User } = require('../../db/models');
 const router = express.Router();
 
 const validateSignup = [
-  check('Name')
+  check('firstName')
     .exists({ checkFalsy: true })
-    .withMessage("Please provide aName")
+    .withMessage("Please provide a First Name")
     .isLength({ max: 50 })
-    .withMessage("Name must not exceed 50 Characters"),
+    .withMessage("Name must not exceed 20 Characters"),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a Last Name")
+    .isLength({ max: 50 })
+    .withMessage("Name must not exceed 20 Characters"),
   check('email')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a valid email')
@@ -42,11 +47,11 @@ const validateSignup = [
 
 // Sign up
 router.post(
-  '/',
+  '',
   validateSignup,
   asyncHandler(async (req, res) => {
-    const { name, email, password, username } = req.body;
-    const user = await User.signup({ name, email, username, password });
+    const { firstName, lastName, email, password, username, address1, address3 } = req.body;
+    const user = await User.signup({ firstName, lastName, email, username, password, address1, address3 });
 
     await setTokenCookie(res, user);
 

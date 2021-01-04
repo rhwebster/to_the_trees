@@ -10,9 +10,9 @@ router.get("/", asyncHandler(async (req, res, next) => {
     res.json({ listings: listings });
 }));
 
-// router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-//     const listing = await Listing.findByPK(req.params.id);
-//     res.json({listing: listing});
-// }))
+router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+    const listing = await Listing.findByPK(req.params.id);
+    res.json({listing: listing});
+}))
 
 module.exports = router;

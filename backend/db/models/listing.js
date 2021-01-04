@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {});
   Listing.associate = function (models) {
-    Listing.belongsTo(models.User, { foreignKey: "userId" });
+    Listing.belongsTo(models.User, { foreignKey: "ownerId" });
     Listing.hasMany(models.Reservation, { foreignKey: "listingId" });
     Listing.hasMany(models.TreehouseReview, { foreignKey: "listingId" });
     Listing.belongsToMany(models.User, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });

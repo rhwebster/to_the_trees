@@ -1,0 +1,8 @@
+#listings-page {
+    border: 1px solid navy;
+    background-color: rgb(191, 206, 206);
+}
+
+#listings-page h4 {
+    color: grey;
+}

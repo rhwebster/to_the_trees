@@ -1,3 +1,13 @@
+.navbar, .navbar button, .navbar a {
+    font-family: sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: #333
+}
+
 .profile-dropdown {
   position: absolute;
 }

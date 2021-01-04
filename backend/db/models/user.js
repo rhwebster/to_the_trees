@@ -4,7 +4,11 @@ const { Validator } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    name: {
+    firstName: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    lastName: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
@@ -77,8 +81,8 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
-    const { id, username, email } = this; // context will be the User instance
-    return { id, username, email };
+    const { id, username, email, firstName } = this; // context will be the User instance
+    return { id, username, email, firstName };
   };
   User.prototype.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.hashedPassword.toString());

@@ -7,7 +7,8 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const demoUsers = await queryInterface.bulkInsert('Users', [
       {
-        name: 'Barney Stinson',
+        firstName: 'Barney',
+        lastName: 'Stinson',
         address1: '1550 1st Ave',
         address2: 'Apt 629',
         address3: 'New York, NY 10028',
@@ -16,7 +17,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('suitup', 10)
       },
       {
-        name: 'Jason Mendoza',
+        firstName: 'Jason',
+        lastName: 'Mendoza',
         address1: '1 Bortles Way',
         address3: 'Good Place, Heaven, 12358',
         username: 'bortlesfan5',
@@ -24,7 +26,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('bortles', 10)
       },
       {
-        name: 'Serena Van Der Woodsen',
+        firstName: 'Serena',
+        lastName: 'Van Der Woodsen',
         address1: '1136 5th Ave',
         address2: 'Penthouse',
         address3: 'New York, NY 10128',
@@ -33,7 +36,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('danornate', 10)
       },
       {
-        name: 'Joe Exotic',
+        firstName: 'Joe',
+        lastName: 'Exotic',
         address1: '25803 N County Rd 3250',
         address3: 'Wynnwood, OK 73098',
         username: 'tigerking',
@@ -41,7 +45,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('caroldidit', 10)
       },
       {
-        name: 'Chandler Bing',
+        firstName: 'Chandler',
+        lastName: 'Bing',
         address1: '90 Bedford St',
         address2: 'Apt 19',
         address3: 'New York, NY 10014',
@@ -50,7 +55,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('monicajoeyrachelrossphoebe', 10)
       },
       {
-        name: 'Walter White',
+        firstName: 'Walter',
+        lastName: 'White',
         address1: '308 Negra Arroyo Ln',
         address3: 'Albuquerque, NM 87111',
         username: 'heizenburg',
@@ -58,7 +64,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('saymyname', 10)
       },
       {
-        name: 'Eric Taylor',
+        firstName: 'Eric',
+        lastName: 'Taylor',
         address1: '13084 E 42nd St',
         address3: 'Dillon, TX 79762',
         username: 'coach',
@@ -66,7 +73,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('tammyjuliegrace', 10)
       },
       {
-        name: 'Troy Barnes',
+        firstName: 'Troy',
+        lastName: 'Barnes',
         address1: '1 Main St',
         address2: 'Guzman Hall #44',
         address3: 'Greendale, CO 80918',
@@ -75,7 +83,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('poppop', 10)
       },
       {
-        name: 'Tyrion Lannister',
+        firstName: 'Tyrion',
+        lastName: 'Lannister',
         address1: '1 Red Keep',
         address3: 'Kings Landing, Westeros, 20419',
         username: 'masterofcoin',
@@ -83,7 +92,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('drinkandknowthings', 10)
       },
       {
-        name: 'Michael Scott',
+        firstName: 'Michael',
+        lastName: 'Scott',
         address1: '1128 Lafayette St',
         address3: 'Scranton, PA, 18504',
         username: 'username',
@@ -91,7 +101,8 @@ module.exports = {
         hashedPassword: await bcrypt.hash('password', 10)
       },
       {
-        name: 'Pete Nelson',
+        firstName: 'Pete',
+        lastName: 'Nelson',
         address1: '6922 Preston-Fall City Rd SE',
         address3: 'Issaquah, WA, 98027',
         username: 'treehousemaster',
@@ -113,8 +124,6 @@ module.exports = {
         description: 'Our first built treehouse at Treehouse Point',
         maxGuests: 4,
         pricePerDay: 295,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         name: 'Bonbibi',
@@ -126,8 +135,6 @@ module.exports = {
         description: 'tucked into the large pines of Issaquah, it is our most cozy spot',
         maxGuests: 2,
         pricePerDay: 275,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         name: 'Burl',
@@ -139,8 +146,6 @@ module.exports = {
         description: "I don't play favorites, but this is my favorite",
         maxGuests: 4,
         pricePerDay: 405,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         name: 'Angry Orchard Treehouse',
@@ -152,8 +157,6 @@ module.exports = {
         description: 'The taproom with the best view',
         maxGuests: 12,
         pricePerDay: 675,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         name: 'Single Spruce Tree Home',
@@ -165,8 +168,6 @@ module.exports = {
         description: "Seaside views from the limbs of a gargantuan Sitka spruce, and a cozy treehouse with everything you'd need in a home",
         maxGuests: 4,
         pricePerDay: 285,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         name: 'Montana Treehouse Retreat',
@@ -178,8 +179,6 @@ module.exports = {
         description: 'Take your fantasy of living in a cabin in the woods to new heights with a stay at this stunning, two-story treehouse retreat at the gateway to Glacier National Park in Montana',
         maxGuests: 4,
         pricePerDay: 510,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         name: 'Treehouse, San Jose',
@@ -191,8 +190,6 @@ module.exports = {
         description: '250 sq ft treehouse with stairs leading to 2 lofts with beds overlooking the most gorgeous view of the Silicon Valley.',
         maxGuests: 4,
         pricePerDay: 350,
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
     ], { returning: true })
   },
@@ -205,8 +202,8 @@ module.exports = {
 
       Example:
       */
-    await queryInterface.bulkDelete('Users', null, {});
     await queryInterface.bulkDelete('Listings', null, {});
+    await queryInterface.bulkDelete('Users', null, {});
 
   }
 };

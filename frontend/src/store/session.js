@@ -4,19 +4,21 @@ import thunk from "redux-thunk";
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
-export const setUser = (user) => ({
-  type: SET_USER,
-  payload: user
-});
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: user
+  };
+};
 
 const removeUser = () => ({
   type: REMOVE_USER
 });
 
-export const login = ({ credential, password }) => async (dispatch) => {
+export const login = ({ credential, password, firstName }) => async (dispatch) => {
   const res = await fetch('/api/session', {
     method: 'POST',
-    body: JSON.stringify({ credential, password })
+    body: JSON.stringify({ credential, password, firstName })
   });
   dispatch(setUser(res.data.user));
   return res;
@@ -29,10 +31,11 @@ export const restoreUser = () => async (dispatch) => {
 };
 
 export const signup = (user) => async (dispatch) => {
-  const { username, email, password } = user;
+  const { firstName, username, email, password } = user;
   const response = await fetch('/api/users', {
     method: 'POST',
     body: JSON.stringify({
+      firstName,
       username,
       email,
       password

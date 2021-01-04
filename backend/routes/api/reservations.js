@@ -9,14 +9,20 @@ const { Op } = require('sequelize');
 const router = express.Router();
 
 router.get('/', restoreUser, asyncHandler(async(req, res, next) => {
-    const user = await db.user.toJSON()
+    const user = await req.db.user.toJSON()
     const reservations = await db.Reservation.findAll({
-        where: { userId: user.id },
+        where: { guestId: user.id },
     });
 }));
 
 router.get('/:id(\\d+)', restoreUser, asyncHandler(async(req, res, next) => {
-    const reservation = await Reservation
+    const reservation = await db.Reservation.getOne(req.params.id);
+    res.json(reservation);
+}))
+
+router.post('/', asyncHandler(async (req, res, next) => {
+    const reservation = await db.Reservation.getOne(req.body);
+    res.json(reservation);
 }))
 
 module.exports = router;
