@@ -3,13 +3,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAListing } from '../../store/listing';
 import { fetchCreateReservation, fetchOneReservation} from '../../store/reservations';
-import AngryOrchard from './angryOrchard.jpeg';
-import BlueMoon from './bluemoon.jpg';
-import Bonbibi from './bonbibi.jpg';
-import Burl from './burl.jpg';
-import Spruce from './spruce.jpeg';
-import Montana from './montana.jpg';
-import SanJose from './sanjose.jpg'
+import AngryOrchard from './images/angryOrchard.jpeg';
+import BlueMoon from './images/bluemoon.jpg';
+import Bonbibi from './images/bonbibi.jpg';
+import Burl from './images/burl.jpg';
+import Spruce from './images/spruce.jpeg';
+import Montana from './images/montana.jpg';
+import SanJose from './images/sanjose.jpg'
 import { NavLink } from 'react-router-dom'
 import { DateRangePicker } from 'react-dates';
 import { fetch } from '../../store/csrf';
