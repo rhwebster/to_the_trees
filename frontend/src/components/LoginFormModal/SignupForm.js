@@ -13,13 +13,22 @@ function SignupForm () {
     const [address1, setAddress1] = useState("");
     const [address2, setAddress2] = useState("");
     const [address3, setAddress3] = useState("");
-    const [errors, setErrors] = useState("");
+    const [errors, setErrors] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === confirmPassword) {
             setErrors([]);
-            return dispatch(sessionActions.signup({ email, username, password, firstName, lastName, address1, address2, address3  }))
+            return dispatch(sessionActions.signup({
+                email,
+                username,
+                password,
+                firstName,
+                lastName,
+                address1,
+                address2,
+                address3  
+            }))
                 .catch(res => {
                     if (res.data && res.data.errors) setErrors(res.data.errors);
                 });
@@ -30,6 +39,9 @@ function SignupForm () {
     return (
         <form onSubmit={handleSubmit}>
             <h3>Sign Up</h3>
+            <ul style={errors.length ? {} : { display: "none" }}>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             <label>
                 Email
                 <input
@@ -98,7 +110,7 @@ function SignupForm () {
                 <input
                     type="text"
                     value={address2}
-                    onChange={(e) => setAddress3(e.target.value)}
+                    onChange={(e) => setAddress2(e.target.value)}
                 />
             </label>
             <label>

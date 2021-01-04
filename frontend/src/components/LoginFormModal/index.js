@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Modal } from '../../context/Modal';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 
 function LoginFormModal() {
-  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [formType, setFormType] = useState("login")
 

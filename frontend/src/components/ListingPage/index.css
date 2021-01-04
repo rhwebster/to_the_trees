@@ -1,0 +1,17 @@
+#listing-description {
+   background-color: rgb(55, 184, 243);
+   color: white;
+   border: 3px solid navy;
+   padding: 50px;
+}
+
+#listing-page-header h4 {
+    color: lightgrey
+}
+
+#images {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    object-fit: scale-down;
+}

@@ -1,5 +1,5 @@
 import picture from "./TreehouseBackground.jpg"
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./index.css";
 
@@ -21,7 +21,7 @@ const HomePage = () => {
                 </div>
             </div>
             {loggedInUser && <h2>Hey {loggedInUser.firstName}!</h2>}
-            <h3>Find Your <Link to="/listings">Treehouse Getaway</Link></h3>
+            <h3>Find Your <NavLink exact to="/listings">Treehouse Getaway</NavLink></h3>
         </div>
     );
 };

@@ -31,27 +31,29 @@ export const restoreUser = () => async (dispatch) => {
 };
 
 export const signup = (user) => async (dispatch) => {
-  const { firstName, username, email, password } = user;
-  const response = await fetch('/api/users', {
+  const { firstName, lastName, username, email, password, address1, address3 } = user;
+  const res = await fetch('/api/users', {
     method: 'POST',
     body: JSON.stringify({
       firstName,
+      lastName,
       username,
       email,
-      password
-    })
+      password,
+      address1,
+      address3
+    }),
   });
-
-  dispatch(setUser(response.data.user));
-  return response;
+  dispatch(setUser(res.data.user));
+  return res;
 };
 
 export const logout = () => async (dispatch) => {
-  const response = await fetch('/api/session', {
+  const res = await fetch('/api/session', {
     method: 'DELETE'
   });
   dispatch(removeUser());
-  return response;
+  return res;
 };
 
 const initialState = { user: null };

@@ -14,5 +14,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.820.0",
+    "body-parser": "^1.19.0",
+    "multer": "^1.4.2"
+  }
 }
