@@ -11,8 +11,9 @@ router.get("/", asyncHandler(async (req, res, next) => {
 }));
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-    const listing = await Listing.findByPK(req.params.id);
-    res.json({listing: listing});
+    const id = parseInt(req.params.id)
+    const listing = await Listing.findByPk(id);
+    return res.json({ listing });
 }))
 
 module.exports = router;

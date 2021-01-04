@@ -10,12 +10,12 @@ const setListings = (listings) => {
     };
 };
 
-const setAListing = (listing) => {
-    return {
-        type: SET_A_LISTING,
-        listing: listing,
-    };
-};
+// const setAListing = (listing) => {
+//     return {
+//         type: SET_A_LISTING,
+//         listing: listing,
+//     };
+// };
 
 export const getListings = () => async (dispatch) => {
     const res = await fetch("api/listings");
@@ -24,12 +24,13 @@ export const getListings = () => async (dispatch) => {
     );
 }
 
-export const getAListing = () => async (dispatch) => {
-    const res = await fetch(`api/listings/${id}`);
-    dispatch(
-        setAListing(res.data.listing)
-    );
-}
+// export const getAListing = () => async (dispatch) => {
+//     const res = await fetch(`/api/listings/${id}`);
+//     console.log('name:', res.data.listing.name)
+//     dispatch(
+//         setAListing(res.data.listing)
+//     );
+// }
 
 const initialState = [];
 
