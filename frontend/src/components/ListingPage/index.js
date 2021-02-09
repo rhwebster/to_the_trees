@@ -76,13 +76,13 @@ const ListingPage = () => {
                     id="listing-page-header">
                     <h2>{aListing.name}</h2>
                         <div id="images">
-                            {(aListing.id === 8) && <img src={BlueMoon} />}
-                            {(aListing.id === 9) && <img src={Bonbibi} />}
-                            {(aListing.id === 10) && <img src={Burl} />}
-                            {(aListing.id === 11) && <img src={AngryOrchard} />}
-                            {(aListing.id === 12) && <img src={Spruce} />}
-                            {(aListing.id === 13) && <img src={Montana} />}
-                            {(aListing.id === 14) && <img src={SanJose} />}
+                            {(aListing.id === 15) && <img src={BlueMoon} />}
+                            {(aListing.id === 16) && <img src={Bonbibi} />}
+                            {(aListing.id === 17) && <img src={Burl} />}
+                            {(aListing.id === 18) && <img src={AngryOrchard} />}
+                            {(aListing.id === 19) && <img src={Spruce} />}
+                            {(aListing.id === 20) && <img src={Montana} />}
+                            {(aListing.id === 21) && <img src={SanJose} />}
                         </div>
                     <img src={aListing.picUrl} />
                     <div id='listing-description'>
