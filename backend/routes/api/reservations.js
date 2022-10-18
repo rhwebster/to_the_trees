@@ -11,12 +11,12 @@ const router = express.Router();
 
 router.get('/', restoreUser, asyncHandler(async(req, res, next) => {
     const user = await req.db.user.toJSON()
-    const { reservations, listing } = await ReservationRepo.userList(user.id)
+    const { reservations, listing } = await Reservation.userList(user.id)
     res.json({ reservations, listing })
 }));
 
 router.get('/:id(\\d+)', restoreUser, asyncHandler(async(req, res, next) => {
-    const reservation = await ReservationRepo.getOne(req.params.id);
+    const reservation = await Reservation.getOne(req.params.id);
     res.json(reservation);
 }))
 
