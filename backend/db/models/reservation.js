@@ -1,23 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Reservation = sequelize.define('Reservation', {
-    startDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    endDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    numGuests: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     listingId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     guestId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    numGuests: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

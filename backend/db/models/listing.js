@@ -5,15 +5,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    address1: {
+    address: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    address2: {
+    city: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
     },
-    address3: {
+    state: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
@@ -48,8 +48,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Listing.associate = function (models) {
     Listing.belongsTo(models.User, { foreignKey: "ownerId" });
-    Listing.hasMany(models.Reservation, { foreignKey: "listingId" });
-    Listing.hasMany(models.TreehouseReview, { foreignKey: "listingId" });
+    Listing.hasMany(models.Image, { foreignKey: "listingId" });
+    Listing.belongsToMany(models.User, { through: "Reservation", foreignKey: "listingId", otherKey: "userId" });
+    Listing.belongsToMany(models.User, { through: "TreehouseReview", foreignKey: "listingId", otherKey: "userId" });
     Listing.belongsToMany(models.User, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });
   };
   return Listing;
