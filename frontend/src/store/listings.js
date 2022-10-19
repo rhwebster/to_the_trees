@@ -1,4 +1,4 @@
-import { fetch } from './csrf';
+import { csrfFetch } from './csrf';
 
 const LOAD_LISTINGS = "listings/LOAD";
 const SEARCH_LISTINGS = "listings/SEARCH";
@@ -22,6 +22,10 @@ export const loadAllListings = () => async (dispatch) => {
         dispatch(loadListings(data.listings));
     };
 };
+
+export const addListing = (data) => async (dispatch) => {
+    const res = await csrfFetch(`/api.`)
+}
 
 const initialState = {};
 
