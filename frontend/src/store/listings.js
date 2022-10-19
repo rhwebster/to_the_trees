@@ -1,32 +1,39 @@
 import { fetch } from './csrf';
 
-const SET_LISTINGS = "listings/setListings";
+const LOAD_LISTINGS = "listings/LOAD";
+const SEARCH_LISTINGS = "listings/SEARCH";
+const LOAD_LISTING = "listings/ONE";
+const FILTER_LISTINGS = "listings/FILTER";
+const UPDATE_LISTING = "listing/UPDATE";
+const REMOVE_LISTING = "listing/REMOVE";
 
-export const setListings = (listings) => {
+
+const loadListings = (data) => {
     return {
-        type: SET_LISTINGS,
-        listings: listings,
+        type: LOAD_LISTING,
+        data,
     };
 };
 
-export const getListings = () => async (dispatch) => {
-    const res = await fetch("api/listings");
-    dispatch(
-        setListings(res.data.listings)
-    );
+export const loadAllListings = () => async (dispatch) => {
+    const res = await fetch(`/api/listings/`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadListings(data.listings));
+    };
 };
 
-const initialState = [];
+const initialState = {};
 
-const ListingsReducer = (state = initialState, action) => {
+const listingsReducer = (state = initialState, action) => {
     let newState;
-    switch(action.type) {
-        case SET_LISTINGS:
-            newState = action.listings;
+    switch (action.type) {
+        case LOAD_LISTINGS: {
+            newState = { ...state };
+            action.data.forEach(listing => {
+                newState[listing.id] = listing;
+            });
             return newState;
-        default:
-            return state;
         }
+    }
 }
-
-export default ListingsReducer;
