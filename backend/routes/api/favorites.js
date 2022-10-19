@@ -5,7 +5,7 @@ const { Favorite } = require('../../db/models');
 const router = express.Router();
 
 // Get user's favorite spots
-router.get('/:userId/favs', asyncHandler(async (req, res) => {
+router.get('/:userId/favs/', asyncHandler(async (req, res) => {
     const userId = req.params.userId;
     const favorites = await Favorite.findAll({
         where: {
@@ -26,7 +26,7 @@ router.post('/', asyncHandler(async (req, res) => {
     return res.json(favorites);
 }));
 
-router.delete('/:userId/:listingId', asyncHandler(async (req, res) => {
+router.delete('/:userId/:listingId/', asyncHandler(async (req, res) => {
     const userId = req.params.userId;
     const listingId = req.params.listingId;
     const favorite = await Favorite.findOne({

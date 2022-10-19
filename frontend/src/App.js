@@ -22,14 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          {/* <Route exact path="/">
-            <Listings />
-          </Route> */}
-          {/* <Route>
-            <h2>Page Not Found</h2>
-          </Route> */}
           <Route path="/" exact>
             <HomePage />
+            <Footer width={100%} />
           </Route>
           <Route path="/listings" exact>
             <ListingsPage />
@@ -40,6 +35,13 @@ function App() {
           <Route path="/testing">
             <UploadPictureForm />
           </Route>
+          <Route exact path="/favorites">
+            <Header isLoaded={isLoaded} />
+            <div className="main_content-wrapper">
+              <Favorites />
+            </div>
+          </Route>
+          <Route>404: Not Found</Route>
         </Switch>
       )}
     </>
