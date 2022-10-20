@@ -31,4 +31,19 @@ router.get('/:userId/listings', asyncHandler(async (req, res) => {
     return res.json({ userListings });
 }));
 
+// Create new listing
+router.post('/', asyncHandler(async (req, res) => {
+    const newListing = await Listing.create(req.body);
+    return res.json(newListing);
+}));
+
+router.put('/:listingId', asyncHandler(async (req, res) => {
+    const listingId = req.params.listingId;
+    const editedListing = await Listing.findByPk(listingId, {
+        include: User,
+    });
+    await editedListing.update(req.body);
+    return res.json(editedListing);
+}));
+
 module.exports = router;
