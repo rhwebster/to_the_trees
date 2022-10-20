@@ -46,4 +46,35 @@ router.put('/:listingId', asyncHandler(async (req, res) => {
     return res.json(editedListing);
 }));
 
+router.delete('/:listingId', asyncHandler(async (req, res) => {
+    const listingId = req.params.listingId;
+    const reviews = await Review.findAll({
+        where: {
+            listingId,
+        },
+    });
+    reviews.forEach(async (review) => {
+        await review.destroy();
+    });
+    const resys = await Reservation.findAll({
+        where: {
+            listingId,
+        }
+    });
+    resys.forEach(async (resy) => {
+        await resy.destroy();
+    });
+    const favorites = await Favorite.findAll({
+        where: {
+            listingId,
+        },
+    });
+    favorites.forEach(async (favorite) => {
+        await favorite.destroy();
+    });
+    const listing = await Listing.findByPk(listingId);
+    await listing.destroy();
+    return res.json(listing);
+}));
+
 module.exports = router;
