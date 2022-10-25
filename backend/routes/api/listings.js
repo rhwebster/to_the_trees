@@ -37,6 +37,7 @@ router.post('/', asyncHandler(async (req, res) => {
     return res.json(newListing);
 }));
 
+// Edit a listing
 router.put('/:listingId', asyncHandler(async (req, res) => {
     const listingId = req.params.listingId;
     const editedListing = await Listing.findByPk(listingId, {
@@ -46,6 +47,7 @@ router.put('/:listingId', asyncHandler(async (req, res) => {
     return res.json(editedListing);
 }));
 
+// Delete a listing
 router.delete('/:listingId', asyncHandler(async (req, res) => {
     const listingId = req.params.listingId;
     const reviews = await Review.findAll({

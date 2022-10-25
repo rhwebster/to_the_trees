@@ -33,7 +33,7 @@ const listingsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_LISTINGS: {
-            newState = { ...state };
+            newState = {...state};
             action.data.forEach(listing => {
                 newState[listing.id] = listing;
             });

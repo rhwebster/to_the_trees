@@ -1,42 +1,32 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const ReservationRepo = require('../../db/reservationRepo');
-const { check } = require('express-validator');
-const db = require('../../db/models/');
-const handleValidationErrors = require('../../utils/validation');
-const { restoreUser } = require('../../utils/auth');
-const { Op } = require('sequelize');
+const { Reservation } = require('../../db/models');
 
 const router = express.Router();
 
-router.get('/', restoreUser, asyncHandler(async(req, res, next) => {
-    const user = await req.db.user.toJSON()
-    const { reservations, listing } = await Reservation.userList(user.id)
-    res.json({ reservations, listing })
+// Get all user reservations
+router.get('/user/:userId', restoreUser, asyncHandler(async(req, res) => {
+    const userId = await req.params.userId;
+    const userResys = await Reservation.findAll({
+        where: {
+            userId,
+        },
+    });
+    res.json(userResys);
 }));
 
-router.get('/:id(\\d+)', restoreUser, asyncHandler(async(req, res, next) => {
-    const reservation = await Reservation.getOne(req.params.id);
-    res.json(reservation);
+// Create a new reservation
+router.post('/', asyncHandler(async (req, res) => {
+    const reservation = await Reservation.create(req.body);
+    return res.json(reservation);
 }))
 
-router.post('/', asyncHandler(async (req, res, next) => {
-    const reservation = await ReservationRepo.getOne(req.body);
-    res.json(reservation);
-}))
-
-router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-    const reservation = await ReservationRepo.edit(req.body);
-    res.json(reservation);
-}))
-
-router.put('/:id(\\d+)/confirm', asyncHandler(async (req, res, next) => {
-    const reservation = await ReservationRepo.confirm(req.params.id)
-    res.json(booking);
-}))
-
-router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-    const reservation = await ReservationRepo.cancelBooking(req.params.id)
-    res.json(reservation);
+// Delete a reservation
+router.put('/:id', asyncHandler(async (req, res) => {
+    const resyId = req.params.id;
+    const reservation = await Reservation.findByPk(resyId);
+    await reservation.destroy();
+    return res.json(resyId);
 }));
+
 module.exports = router;
