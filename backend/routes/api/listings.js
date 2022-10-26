@@ -5,7 +5,7 @@ const { Listing, User, TreehouseReview, Reservation, Favorite } = require('../..
 const router = express.Router();
 
 // Get all listings
-router.get('/all', asyncHandler(async (req, res) => {
+router.get('/', asyncHandler(async (req, res) => {
     const listings = await Listing.findAll({
         include: [User],
     });
@@ -13,14 +13,14 @@ router.get('/all', asyncHandler(async (req, res) => {
 }));
 
 // Get specific place
-router.get('/:listingId', asyncHandler(async (req, res) => {
+router.get('/:listingId/', asyncHandler(async (req, res) => {
     const listingId = req.params.listingId;
     const listing = await Listing.findByPk(listingId);
     return res.json({ listing });
 }));
 
 // Get all listings from a specific user
-router.get('/:userId/listings', asyncHandler(async (req, res) => {
+router.get('/:userId/', asyncHandler(async (req, res) => {
     const userId = req.params.userId;
     const userListings = await Listing.findAll({
         where: {
@@ -38,7 +38,7 @@ router.post('/', asyncHandler(async (req, res) => {
 }));
 
 // Edit a listing
-router.put('/:listingId', asyncHandler(async (req, res) => {
+router.put('/:listingId/', asyncHandler(async (req, res) => {
     const listingId = req.params.listingId;
     const editedListing = await Listing.findByPk(listingId, {
         include: User,
@@ -48,7 +48,7 @@ router.put('/:listingId', asyncHandler(async (req, res) => {
 }));
 
 // Delete a listing
-router.delete('/:listingId', asyncHandler(async (req, res) => {
+router.delete('/:listingId/', asyncHandler(async (req, res) => {
     const listingId = req.params.listingId;
     const reviews = await Review.findAll({
         where: {
