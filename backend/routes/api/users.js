@@ -47,7 +47,7 @@ const validateSignup = [
 
 // Sign up
 router.post(
-  '',
+  '/',
   validateSignup,
   asyncHandler(async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;

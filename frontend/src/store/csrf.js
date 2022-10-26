@@ -35,5 +35,5 @@ export async function fetch(url, options = {}) {
 }
 
 export function restoreCSRF() {
-  return fetch('/api/csrf/restore');
+  return csrfFetch('/api/csrf/restore');
 }
