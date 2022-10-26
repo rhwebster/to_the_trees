@@ -21,4 +21,8 @@
 #modal-content {
   position: absolute;
   background-color:white;
+  border-radius: 2rem;
+  backface-visibility: hidden;
+  animation: moveInUp 300ms linear;
 }
+
