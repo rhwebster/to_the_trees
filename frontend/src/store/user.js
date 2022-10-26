@@ -21,7 +21,7 @@ const usersReducer = (state = initialState, action) => {
         case LOAD_USERS: {
             newState = { ...state };
             action.data.forEach(user => {
-                newState.[user.id] = user;
+                newState[user.id] = user;
             });
             return newState;
         }
