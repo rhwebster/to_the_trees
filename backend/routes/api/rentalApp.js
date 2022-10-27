@@ -6,7 +6,7 @@ const { setTokenCookie } = require('../../utils/auth');
 const router = express.Router();
 
 // Get all of user's bookings
-router.get('/:userId', asyncHandler(async (req, res) => {
+router.get('/:userId/', asyncHandler(async (req, res) => {
     const userId = req.params.userId;
     const allApps = await RentalApp.findAll({
         where: {
