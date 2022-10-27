@@ -3,16 +3,8 @@ import { csrfFetch } from './csrf';
 const LOAD_LISTINGS = "listings/LOAD";
 const SEARCH_LISTINGS = "listings/SEARCH";
 const LOAD_LISTING = "listings/ONE";
-const FILTER_LISTINGS = "listings/FILTER";
 const UPDATE_LISTING = "listing/UPDATE";
 const REMOVE_LISTING = "listing/REMOVE";
-
-export const filterListings = (data) => {
-    return {
-        type: FILTER_LISTINGS,
-        data,
-    };
-};
 
 const loadListings = (data) => {
     return {
@@ -76,7 +68,7 @@ export const updateListing = (id, data) => async (dispatch) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data);
+        body: JSON.stringify(data),
     });
     const resJson = await response.json();
     dispatch(updateListings(resJson));
@@ -91,6 +83,14 @@ export const deleteListing = (id) => async (dispatch) => {
     dispatch(removeListing(resJson));
     return resJson;
 };
+
+export const searchForListings = (params) => async (dispatch) => {
+    const response = await fetch(`/api/search/${params}`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(searchListings(data.searchResults));
+    }
+}
 
 const initialState = {};
 
@@ -119,6 +119,15 @@ const listingsReducer = (state = initialState, action) => {
             delete newState[action.data.id];
             return newState;
         }
+        case SEARCH_LISTINGS: {
+            newState = {};
+            action.data.forEach(home => {
+                newState[home.id] = home;
+            })
+            return newState;
+        }
+        default:
+            return state;
     }
 };
 
