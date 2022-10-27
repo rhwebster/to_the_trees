@@ -5,6 +5,7 @@ import favoriteReducer from './favorites';
 import listingsReducer from './listings';
 import reservationsReducer from './reservations';
 import usersReducer from './user';
+import applicationsReducer from './rentalApps';
 
 const rootReducer = combineReducers({
   session: session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   reservations: reservationsReducer,
   favorites: favoriteReducer,
   users: usersReducer,
+  applications: applicationsReducer,
 });
 
 let enhancer;

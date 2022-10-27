@@ -17,6 +17,13 @@ const addApplication = (data) => {
     };
 };
 
+const updateUserApp = (data) => {
+    return {
+        type: UPDATE_USER,
+        data,
+    };
+};
+
 export const loadRentalApps = (userId) => async (dispatch) => {
     const rentalApps = await fetch(`/api/rentalApp/${userId}/`);
     const userApps = await rentalApps.json();
@@ -36,6 +43,21 @@ export const addRentalApp = (data) => async (dispatch) => {
     return dataJson;
 };
 
+export const updateUserApps = (data) => async (dispatch) => {
+    const { userId, id } = data;
+
+    const response = await csrfFetch(`/api/rentalApp/${userId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const dataJson = await response.json();
+
+    dispatch(updateUserApp(id));
+};
+
 const initialState = {};
 
 const applicationsReducer = (state = initialState, action) => {
@@ -48,5 +70,19 @@ const applicationsReducer = (state = initialState, action) => {
             })
             return newState;
         }
+        case ADD_APP: {
+            newState = { ...state };
+            newState[action.data.id] = action.data;
+            return newState;
+        }
+        case UPDATE_USER: {
+            newState = { ...state };
+            delete newState[action.data];
+            return newState;
+        }
+        default:
+            return state;
     }
-}
+};
+
+export default applicationsReducer;
