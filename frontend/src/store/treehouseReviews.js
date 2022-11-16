@@ -12,11 +12,26 @@ const loadReviews = (data) => {
     };
 };
 
-export const getAllReviews = (id, data) => async (dispatch) => {
+const deleteAReview = (data) => {
+    return {
+        type: DELETE_REVIEW,
+        data,
+    };
+};
+
+export const getAllReviews = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/reviews/${id}`);
     const reviewsArray = await res.json();
     dispatch(loadReviews(reviewsArray));
 }
+
+export const deleteReview = (id) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/${id}`, {
+        method: "DELETE",
+    });
+    const data = await res.json();
+    dispatch(deleteAReview(data));
+};
 
 const initialState = {};
 
@@ -28,6 +43,11 @@ const reviewsReducer = (state = initialState, action) => {
             action.data.forEach((review) => {
                 newState[review.id] = review;
             });
+            return newState;
+        }
+        case DELETE_REVIEW: {
+            newState = { ...state };
+            delete newState[action.data];
             return newState;
         }
     }
