@@ -26,6 +26,13 @@ const editAReview = (data) => {
     };
 };
 
+const addAReview = (data) => {
+    return {
+        type: ADD_REVIEW,
+        data,
+    };
+};
+
 export const getAllReviews = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/reviews/${id}`);
     const reviewsArray = await res.json();
@@ -54,6 +61,19 @@ export const editReview = (id, data) => async (dispatch) => {
     return data;
 }
 
+export const addReview = (data) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    const newReview = await res.json();
+    dispatch(addAReview(newReview));
+    return newReview;
+}
+
 const initialState = {};
 
 const reviewsReducer = (state = initialState, action) => {
@@ -76,5 +96,14 @@ const reviewsReducer = (state = initialState, action) => {
             newState[action.data.id] = action.data;
             return newState;
         }
+        case ADD_REVIEW: {
+            newState = { ...state };
+            newState[action.data.id] = action.data;
+            return newState;
+        }
+        default:
+            return state;
     }
-}
+};
+
+export default reviewsReducer;
