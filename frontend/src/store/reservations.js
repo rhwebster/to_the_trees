@@ -55,7 +55,7 @@ export const deleteReservation = (id) => async (dispatch) => {
 
 const initialState = {};
 
-const bookingsReducer = (state = initialState, action) => {
+const reservationsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_RESYS: {
