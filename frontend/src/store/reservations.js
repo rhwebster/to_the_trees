@@ -18,6 +18,13 @@ const addResy = (data) => {
     };
 };
 
+const deleteResy = (data) => {
+    return {
+        type: DELETE_RESY,
+        data,
+    };
+};
+
 export const loadReservations = (id) => async (dispatch) => {
     const allReservations = await fetch(`/api/reservations/user/${id}`);
     const reservationsArray = await allReservations.json();
@@ -37,6 +44,15 @@ export const addReservation = (data) => async (dispatch) => {
     return resyData;
 };
 
+export const deleteReservation = (id) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reservations/${id}`, {
+        method: "DELETE",
+    });
+    const data = await res.json();
+    dispatch(deleteResy(data));
+    return data;
+};
+
 const initialState = {};
 
 const bookingsReducer = (state = initialState, action) => {
@@ -54,5 +70,14 @@ const bookingsReducer = (state = initialState, action) => {
             newState[action.data.id] = action.data;
             return newState;
         }
+        case DELETE_RESY: {
+            newState = { ...state };
+            delete newState[action.data];
+            return newState;
+        }
+        default:
+            return state;
     }
-}
+};
+
+export default reservationsReducer;

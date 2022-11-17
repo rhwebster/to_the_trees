@@ -22,7 +22,7 @@ router.post('/', asyncHandler(async (req, res) => {
 }))
 
 // Delete a reservation
-router.put('/:id', asyncHandler(async (req, res) => {
+router.delete('/:id', asyncHandler(async (req, res) => {
     const resyId = req.params.id;
     const reservation = await Reservation.findByPk(resyId);
     await reservation.destroy();
