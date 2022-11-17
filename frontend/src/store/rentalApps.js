@@ -1,4 +1,4 @@
-import { csrfFetch } from './csrf';
+import { fetch } from './csrf';
 const LOAD_APPS = 'rentalApps/Load';
 const ADD_APP = 'rentalApps/ADD';
 const UPDATE_USER = 'rentalApps/UPDATE';
@@ -31,7 +31,7 @@ export const loadRentalApps = (userId) => async (dispatch) => {
 }
 
 export const addRentalApp = (data) => async (dispatch) => {
-    const response = await csrfFetch(`/api/rentalApp/`, {
+    const response = await fetch(`/api/rentalApp/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const addRentalApp = (data) => async (dispatch) => {
 export const updateUserApps = (data) => async (dispatch) => {
     const { userId, id } = data;
 
-    const response = await csrfFetch(`/api/rentalApp/${userId}`, {
+    const response = await fetch(`/api/rentalApp/${userId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

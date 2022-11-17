@@ -1,5 +1,5 @@
 
-import { csrfFetch } from './csrf';
+import { fetch } from './csrf';
 const LOAD_RESYS = 'reservations/LOAD';
 const ADD_RESY = 'reservation/ADD';
 const DELETE_RESY = 'reservation/DELETE';
@@ -32,7 +32,7 @@ export const loadReservations = (id) => async (dispatch) => {
 };
 
 export const addReservation = (data) => async (dispatch) => {
-    const res = await csrfFetch('/api/reservations/', {
+    const res = await fetch('/api/reservations/', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const addReservation = (data) => async (dispatch) => {
 };
 
 export const deleteReservation = (id) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reservations/${id}`, {
+    const res = await fetch(`/api/reservations/${id}`, {
         method: "DELETE",
     });
     const data = await res.json();

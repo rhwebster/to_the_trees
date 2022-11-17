@@ -1,4 +1,4 @@
-import { csrfFetch } from './csrf';
+import { fetch } from './csrf';
 
 const LOAD_REVIEWS = 'reviews/LOAD';
 const DELETE_REVIEW = 'reviews/DELETE';
@@ -34,13 +34,13 @@ const addAReview = (data) => {
 };
 
 export const getAllReviews = (id) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reviews/${id}`);
+    const res = await fetch(`/api/reviews/${id}`);
     const reviewsArray = await res.json();
     dispatch(loadReviews(reviewsArray));
 }
 
 export const deleteReview = (id) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reviews/${id}`, {
+    const res = await fetch(`/api/reviews/${id}`, {
         method: "DELETE",
     });
     const data = await res.json();
@@ -48,7 +48,7 @@ export const deleteReview = (id) => async (dispatch) => {
 };
 
 export const editReview = (id, data) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reviews/${id}`, {
+    const res = await fetch(`/api/reviews/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const editReview = (id, data) => async (dispatch) => {
 }
 
 export const addReview = (data) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reviews/`, {
+    const res = await fetch(`/api/reviews/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

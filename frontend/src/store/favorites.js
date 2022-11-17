@@ -1,4 +1,4 @@
-import { csrfFetch } from './csrf';
+import { fetch } from './csrf';
 
 const LOAD_FAVORITES = 'favorites/LOAD';
 const REMOVE_FAVORITE = 'favorites/REMOVE';
@@ -28,18 +28,17 @@ const addFavorite = (data) => {
 export const loadAllFavorites = (userId) => async (dispatch) => {
     const allFavorites = await fetch(`/api/favorites/${userId}/favs/`);
     const favorites = await allFavorites.json();
-    dispatch(loadAllFavorites(favorites));
+    dispatch(loadFavorites(favorites));
 }
 
 export const addAFavorite = (userId, listingId) => async (dispatch) => {
-    const res = await csrfFetch(`/api/favorites/`, {
+    const res = await fetch(`/api/favorites/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId, listingId }),
     });
-
     if (res.ok) {
         const newFav = await res.json();
         dispatch(addFavorite(newFav));
@@ -48,7 +47,7 @@ export const addAFavorite = (userId, listingId) => async (dispatch) => {
 }
 
 export const removeAFavorite = (userId, listingId) => async (dispatch) => {
-    const res = await csrfFetch(`/api/favorites/${userId}/${listingId}/`, {
+    const res = await fetch(`/api/favorites/${userId}/${listingId}/`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

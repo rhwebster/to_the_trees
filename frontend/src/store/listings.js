@@ -50,7 +50,7 @@ export const loadAllListings = () => async (dispatch) => {
 };
 
 export const addListing = (data) => async (dispatch) => {
-    const response = await csrfFetch(`/api/listings/`, {
+    const response = await fetch(`/api/listings/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export const addListing = (data) => async (dispatch) => {
 }
 
 export const updateListing = (id, data) => async (dispatch) => {
-    const response = await csrfFetch(`/api/listings/${id}/`, {
+    const response = await fetch(`/api/listings/${id}/`, {
         mehtod: "PUT",
         headers: {
             "Content-Type": "application/json",
