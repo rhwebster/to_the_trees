@@ -1,7 +1,7 @@
 import { fetch } from './csrf';
 
 const LOAD_FAVORITES = 'favorites/LOAD';
-const REMOVE_FAVORITE = 'favorites/REMOVE';
+const DELETE_FAVORITE = 'favorites/DELETE';
 const ADD_FAVORITE = 'favorite/ADD';
 
 const loadFavorites = (data) => {
@@ -11,9 +11,9 @@ const loadFavorites = (data) => {
     };
 };
 
-const removeFavorite = (data) => {
+const deleteFavorite = (data) => {
     return {
-        type: REMOVE_FAVORITE,
+        type: DELETE_FAVORITE,
         data,
     };
 };
@@ -55,7 +55,7 @@ export const removeAFavorite = (userId, listingId) => async (dispatch) => {
     });
     if (res.ok) {
         const removed = await res.json();
-        dispatch(removeFavorite(removed));
+        dispatch(deleteFavorite(removed));
         return removed;
     }
 };
@@ -72,7 +72,7 @@ const favoriteReducer = (state = initialState, action) => {
             });
             return newState;
         }
-        case REMOVE_FAVORITE: {
+        case DELETE_FAVORITE: {
             newState = {};
             action.data.forEach((fav, i) => {
                 newState[i+1] = fav;

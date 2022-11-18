@@ -5,6 +5,7 @@ const SEARCH_LISTINGS = "listings/SEARCH";
 const LOAD_LISTING = "listings/ONE";
 const UPDATE_LISTING = "listing/UPDATE";
 const REMOVE_LISTING = "listing/REMOVE";
+const ADD_LISTING = "listing/ADD";
 
 const loadListings = (data) => {
     return {
@@ -41,6 +42,13 @@ const loadListing = (data) => {
     };
 };
 
+const addListing = (data) => {
+    return {
+        type: ADD_LISTING,
+        data,
+    };
+};
+
 export const loadAllListings = () => async (dispatch) => {
     const res = await fetch(`/api/listings/`);
     if (res.ok) {
@@ -49,7 +57,16 @@ export const loadAllListings = () => async (dispatch) => {
     };
 };
 
-export const addListing = (data) => async (dispatch) => {
+export const loadAListing = (id) => async (dispatch) => {
+    const res = await fetch(`/api/listings/${id}/`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadListing(data));
+        return data;
+    };
+};
+
+export const addAListing = (data) => async (dispatch) => {
     const response = await fetch(`/api/listings/`, {
         method: "POST",
         headers: {
@@ -58,7 +75,7 @@ export const addListing = (data) => async (dispatch) => {
         body: JSON.stringify(data),
     });
     const resJson = await response.json();
-    dispatch(loadListing(resJson));
+    dispatch(addListing(resJson));
     return resJson;
 }
 
@@ -107,6 +124,11 @@ const listingsReducer = (state = initialState, action) => {
         case LOAD_LISTING: {
             newState = { ...state };
             newState[action.listing.id] = action.data;
+            return newState;
+        }
+        case ADD_LISTING: {
+            newState = { ...state };
+            newState[action.data.id] = action.data;
             return newState;
         }
         case UPDATE_LISTING: {
