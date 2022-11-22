@@ -31,8 +31,18 @@ const ListingsPage = () => {
     }, [dispatch]);
 
     return (
-        <>
-            <div id="listing-header">
+        <div className='listings-container'>
+            <div className='listings-info'>
+                <div className='listings-list-container'>
+                    <p className='listing-count'>
+                        {Object.values(listings).length !== 1 ?
+                        `${Object.values(listings).length} stays found` :
+                        `${Object.values(listings).length} stay found`}
+                    </p>
+                    <h2>{title ? title : "All homes"}</h2>
+                </div>
+            </div>
+            {/* <div id="listing-header">
                 <div id="listing-header-seach">
                     <h2>So many views to take in up in the trees!</h2>
                     <SearchBar query={query} setQuery={setQuery} activePage={activePage}/>
@@ -40,7 +50,7 @@ const ListingsPage = () => {
                     {listings.length === 1 && <h4>magical match!</h4>}
                     {listings.length > 1 && <h4>magical matches!</h4>}
                 </div>
-            </div>
+            </div> */}
             <div id="listings-page">
                 <h4>Here are some other ideas you may like:</h4>
                 {!allListings && <h3>Loading...</h3>}
