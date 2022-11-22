@@ -41,6 +41,14 @@ const ListingsPage = () => {
                     </p>
                     <h2>{title ? title : "All homes"}</h2>
                 </div>
+                <div className='full-listings-list'>
+                    {Object.values(listings).length && 
+                    (Object.values(listings).map(listing => (
+                        <NavLink key={listing.id} to={`/listings/${listing.id}`}>
+                            <ListingCard listing={listing} />
+                        </NavLink>
+                    )))}
+                </div>
             </div>
             {/* <div id="listing-header">
                 <div id="listing-header-seach">
