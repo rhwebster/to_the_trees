@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import ListingCard from '../ListingCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { getListings } from '../../store/listings';
+import { loadAllListings } from '../../store/listings';
 import SearchBar from '../SearchBar';
 import './index.css'
+import { loadAllFavorites } from '../../store/favorites';
+import { getAllReviews } from '../../store/treehouseReviews';
 // // import ListingCard from '../ListingCard';
 
 
 const ListingsPage = () => {
 
     const dispatch = useDispatch();
+    const listings = useSelector(state => state.listings);
+    const reviews = useSelector(state => state.reviews);
+    const user = useSelector(state => state.session.user);
 
-    const allListings = useSelector(fullReduxState => {
-        return fullReduxState.listings;
-    })
+    const [selectedListing, setSelectedListing] = useState(null);
+    allMarkers = Object.values(listings);
 
-    const [activePage, setActivepage] = useState('listings');
-    const [listings, setListings] = useState([]);
-    const [query, setQuery] = useState('');
+    const location = useLocation();
 
-    useEffect(async () => {
-        dispatch(
-            getListings()
-        );
-    }, []);
+    useEffect(() => {
+        if (user?.id) dispatch(loadAllFavorites(user?.id));
+    }, [user]);
+    useEffect(() => {
+        dispatch(loadAllListings());
+        dispatch(getAllReviews());
+    }, [dispatch]);
 
     return (
         <>
