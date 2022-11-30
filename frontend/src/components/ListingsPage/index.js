@@ -25,6 +25,7 @@ const ListingsPage = () => {
     useEffect(() => {
         if (user?.id) dispatch(loadAllFavorites(user?.id));
     }, [user]);
+
     useEffect(() => {
         dispatch(loadAllListings());
         dispatch(getAllReviews());
@@ -68,7 +69,7 @@ const ListingsPage = () => {
                     </ul>
                 ))}
             </div>
-        </>
+        </div>
     );
 };
 

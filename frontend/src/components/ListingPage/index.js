@@ -14,6 +14,8 @@ import { NavLink } from 'react-router-dom'
 import { DateRangePicker } from 'react-dates';
 import { fetch } from '../../store/csrf';
 import './index.css';
+import { loadAllFavorites } from '../../store/favorites';
+import { getAllReviews } from '../../store/treehouseReviews';
 
 
 
@@ -21,16 +23,21 @@ const ListingPage = () => {
 
     const dispatch = useDispatch();
     const { id } = useParams();
-
-    const aListing = useSelector(fullReduxState => {
-        return fullReduxState.listing;
-    });
+    const favorites = useSelector(state => state.favorites);
+    const listings = useSelector(state => state.listings);
+    const reviews = useSelector(state => state.reviews);
+    const user = useSelector(state => state.session.user);
+    const hosts = useSelector(state => state.users);
+    const [rating, setRating] = useState(0);
+    const [review, setReview] = useState("");
+    const [count, setCount] = useState(1);
 
     useEffect(async () => {
-        dispatch(
-            getAListing(id)
-        );
-    }, []);
+        dispatch(loadAllListings());
+        dispatch(loadAllFavorites(user.id));
+        dispatch(loadUsers());
+        dispatch(getAllReviews());
+    }, [dispatch ]);
 
     
     const history = useHistory();
@@ -45,30 +52,14 @@ const ListingPage = () => {
         return Math.ceil(end.diff(start) / 604800)
     };
 
-    const handleClick = async () => {
-        const newErrors = [];
-        if(!startDate || !endDate) {
-            newErrors.push("Please select start and end date");
+    const requestBooking = async (e) => {
+        e.preventDefault();
+        if (!user) return history.push('/login');
+        const payload = {
+            userId = user.id,
+            listingId = listing.id,
+            review = reviewText,
         }
-        if (!sessionUser) {
-            newErrors.push("Please log in or sign up");
-        }
-        if (newErrors.length === 0) {
-            const duration = reservationLength(startDate, endDate);
-
-            const newReservation = dispatch(fetchCreateReservation ({
-                listingId: listingId,
-                userId: sessionUser.id,
-                startDate: startDate.toDate(),
-                endDate: endDate.toDate(),
-                duration: duration
-            }));
-            const reservationId = newReservation.id;
-            history.push(`/listings/${listingId}/reservations/${reservationId}`);
-            return null;
-        }
-        setErrors(newErrors);
-    }
 
         return (
             <>
