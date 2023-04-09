@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAListing } from '../../store/listing';
-import { fetchCreateReservation, fetchOneReservation} from '../../store/reservations';
+import { addReservation, fetchCreateReservation, fetchOneReservation} from '../../store/reservations';
 import AngryOrchard from './images/angryOrchard.jpeg';
 import BlueMoon from './images/bluemoon.jpg';
 import Bonbibi from './images/bonbibi.jpg';
@@ -52,49 +52,52 @@ const ListingPage = () => {
         return Math.ceil(end.diff(start) / 604800)
     };
 
-    const requestBooking = async (e) => {
+    const requestResy = async (e) => {
         e.preventDefault();
         if (!user) return history.push('/login');
         const payload = {
             userId = user.id,
-            listingId = listing.id,
+            listingId = id,
             review = reviewText,
         }
+        const resy = await dispatch(addReservation(payload));
+        history.push('/profile');
+    };
 
-        return (
-            <>
-                <div className="listing-page-header"
-                    id="listing-page-header">
-                    <h2>{aListing.name}</h2>
-                        <div id="images">
-                            {(aListing.id === 15) && <img src={BlueMoon} />}
-                            {(aListing.id === 16) && <img src={Bonbibi} />}
-                            {(aListing.id === 17) && <img src={Burl} />}
-                            {(aListing.id === 18) && <img src={AngryOrchard} />}
-                            {(aListing.id === 19) && <img src={Spruce} />}
-                            {(aListing.id === 20) && <img src={Montana} />}
-                            {(aListing.id === 21) && <img src={SanJose} />}
-                        </div>
-                    <img src={aListing.picUrl} />
-                    <div id='listing-description'>
-                        <h3>{aListing.description}</h3>
+    return (
+        <>
+            <div className="listing-page-header"
+                id="listing-page-header">
+                <h2>{aListing.name}</h2>
+                    <div id="images">
+                        {(aListing.id === 15) && <img src={BlueMoon} />}
+                        {(aListing.id === 16) && <img src={Bonbibi} />}
+                        {(aListing.id === 17) && <img src={Burl} />}
+                        {(aListing.id === 18) && <img src={AngryOrchard} />}
+                        {(aListing.id === 19) && <img src={Spruce} />}
+                        {(aListing.id === 20) && <img src={Montana} />}
+                        {(aListing.id === 21) && <img src={SanJose} />}
                     </div>
-                    <h3>Maximum Number of Guests: {aListing.maxGuests}</h3>
-                    <h3>Price (per day): ${aListing.pricePerDay}</h3>
-                    <h4><NavLink exact to="/listings">view some more!</NavLink></h4>
+                <img src={aListing.picUrl} />
+                <div id='listing-description'>
+                    <h3>{aListing.description}</h3>
                 </div>
-                <button 
-                    className="button"
-                    onClick={handleClick} >
-                        Reserve Now
+                <h3>Maximum Number of Guests: {aListing.maxGuests}</h3>
+                <h3>Price (per day): ${aListing.pricePerDay}</h3>
+                <h4><NavLink exact to="/listings">view some more!</NavLink></h4>
+            </div>
+            <button 
+                className="button"
+                onClick={handleClick} >
+                    Reserve Now
+            </button>
+            <button
+                className="button"
+                onClick={handleClick}>
+                    Leave a Review
                 </button>
-                <button
-                    className="button"
-                    onClick={handleClick}>
-                        Leave a Review
-                    </button>
-            </>
-        );
+        </>
+    );
 };
 
 export default ListingPage;

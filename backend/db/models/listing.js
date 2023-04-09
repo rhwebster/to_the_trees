@@ -1,33 +1,31 @@
 'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const Listing = sequelize.define('Listing', {
+  class Listing extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      Listing.belongsTo(models.User, { foreignKey: "ownerId" });
+      Listing.hasMany(models.Image, { foreignKey: "listingId" });
+      Listing.belongsToMany(models.User, { through: "Reservation", foreignKey: "listingId", otherKey: "guestId" });
+      Listing.belongsToMany(models.User, { through: "TreehouseReview", foreignKey: "listingId", otherKey: "guestId" });
+      Listing.belongsToMany(models.User, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });
+    }
+  }
+  Listing.init({
     name: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
     address: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    city: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    state: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    lat: {
-      type: DataTypes.FLOAT(10,6),
-      allowNull: false,
-    },
-    lon: {
-      type: DataTypes.FLOAT(10,6),
-      allowNull: false,
-    },
-    picUrl: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     ownerId: {
       type: DataTypes.INTEGER,
@@ -41,17 +39,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    pricePerDay: {
+    pricePerNight: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-  }, {});
-  Listing.associate = function (models) {
-    Listing.belongsTo(models.User, { foreignKey: "ownerId" });
-    Listing.hasMany(models.Image, { foreignKey: "listingId" });
-    Listing.belongsToMany(models.User, { through: "Reservation", foreignKey: "listingId", otherKey: "userId" });
-    Listing.belongsToMany(models.User, { through: "TreehouseReview", foreignKey: "listingId", otherKey: "userId" });
-    Listing.belongsToMany(models.User, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });
-  };
+    lat: {
+      type: DataTypes.INTEGER,
+    },
+    lon: {
+      type: DataTypes.INTEGER
+    },
+  }, {
+    sequelize,
+    modelName: 'Listing',
+  });
   return Listing;
 };
