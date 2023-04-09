@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { Image } = require('../../db/models');
+const { Image } = require('../backend/db/models');
 
 const router = express.Router();
 

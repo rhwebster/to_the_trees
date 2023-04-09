@@ -1,12 +1,27 @@
 'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const GuestReview = sequelize.define('GuestReview', {
-    rating: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+  class GuestReview extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      GuestReview.belongsTo(models.User, { foreignKey: "ownerId" });
+      GuestReview.belongsTo(models.User, { foreignKey: "guestId" });
+    }
+  }
+  GuestReview.init({
     body: {
       type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     guestId: {
@@ -16,11 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-  }, {});
-  GuestReview.associate = function (models) {
-    GuestReview.belongsTo(models.User, { foreignKey: "guestId" });
-    GuestReview.belongsTo(models.User, { foreignKey: "ownerId" });
-  };
+    }
+  }, {
+    sequelize,
+    modelName: 'GuestReview',
+  });
   return GuestReview;
 };
