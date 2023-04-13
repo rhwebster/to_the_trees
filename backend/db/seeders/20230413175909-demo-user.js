@@ -5,6 +5,7 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+options.tableName = 'Users';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -18,7 +19,6 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   options.tableName = 'Users';
    await queryInterface.bulkInsert(options, [
     {
       name: 'Barney Stinson',
