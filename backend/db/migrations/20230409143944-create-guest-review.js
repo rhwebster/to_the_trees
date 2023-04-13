@@ -20,12 +20,12 @@ module.exports = {
       guestId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'User' }
+        references: { model: 'Users' }
       },
       ownerId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'User' }
+        references: { model: 'Users' }
       },
       createdAt: {
         allowNull: false,
