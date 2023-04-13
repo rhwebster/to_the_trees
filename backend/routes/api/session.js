@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
 const { User } = require('../../db/models');
+const { Op } = require('sequelize');
+const bcrypt = require('bcryptjs');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 
@@ -16,12 +17,14 @@ const validateLogin = [
     handleValidationErrors,
 ]
 
-router.post('/', validateLogin, asyncHandler(async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     const { email, password } = req.body;
 
-    const user = await User.login({ email, password });
+    const user = await User.unscoped().findOne({ 
+        where: { email: email }
+    });
 
-    if (!user) {
+    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
         const err = new Error("Login failed");
         err.status = 401;
         err.title = "Login failed";
@@ -29,10 +32,15 @@ router.post('/', validateLogin, asyncHandler(async (req, res, next) => {
         return next(err);
     }
 
-    await setTokenCookie(res, user);
+    const safeUser = {
+        id: user.id,
+        email: user.email,
+    };
 
-    return res.json({ user });
-}));
+    await setTokenCookie(res, safeUser);
+
+    return res.json({ user: safeUser });
+});
 
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
