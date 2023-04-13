@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
-// const apiRouter = require('../../api');
+const apiRouter = require('./api');
 // import testUploadRouter = require('./test-upload-route');
 
-// router.use('/api', apiRouter);
+router.use('/api', apiRouter);
 // router.use('/temp', testUploadRouter)
 
-router.get('/hello/world', (req, res) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  res.send('Hello World!');
+router.get('/api/csrf/restore', (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.cookie("XSRF-TOKEN", csrfToken);
+  res.status(200).json({
+    'XSRF-Token': csrfToken
+  })
 });
 // // Static routes
 // // Serve React build files in production
