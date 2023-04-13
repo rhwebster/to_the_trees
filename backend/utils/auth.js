@@ -7,10 +7,14 @@ const { secret, expiresIn } = jwtConfig;
 // Sends a JWT Cookie
 const setTokenCookie = (res, user) => {
   // Create the token.
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+  };
   const token = jwt.sign(
-    { data: user.toSafeObject() },
+    { data: safeUser },
     secret,
-    { expiresIn: parseInt(expiresIn) }, // 604,800 seconds = 1 week
+    { expiresIn: parseInt(expiresIn) }
   );
 
   const isProduction = process.env.NODE_ENV === "production";
@@ -37,7 +41,9 @@ const restoreUser = (req, res, next) => {
 
     try {
       const { id } = jwtPayload.data;
-      req.user = await User.scope("currentUser").findByPk(id);
+      req.user = await User.findByPk(id, {
+        attributes: { include: ['email', 'createdAt', 'updatedAt'] }
+      });
     } catch (e) {
       res.clearCookie("token");
       return next();
@@ -52,12 +58,12 @@ const restoreUser = (req, res, next) => {
 // If there is no current user, return an error
 const requireAuth = [
   restoreUser,
-  function (req, res, next) {
+  function (req, _res, next) {
     if (req.user) return next();
 
-    const err = new Error('Unauthorized');
+    const err = new Error('Authentication required');
     err.title = 'Unauthorized';
-    err.errors = ['Unauthorized'];
+    err.errors = { message: 'Authentication required' };
     err.status = 401;
     return next(err);
   },
