@@ -6,7 +6,8 @@ const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const errors = validationErrors.array().map((error) => `${error.msg}`);
+    const errors = {};
+    validationErrors.array().forEach(err => errors[err.param] = err.msg);
 
     const err = Error("Bad request.");
     err.errors = errors;

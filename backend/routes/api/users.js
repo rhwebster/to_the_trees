@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { User } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -20,13 +20,19 @@ const validateSignUp = [
     handleValidationErrors,
 ];
 
-router.post('/', validateSignUp, asyncHandler(async (req, res) => {
-    const { email, password, name } = req.body;
-    const user = await User.signup({ email, password, name });
+router.post('/', validateSignUp, async (req, res) => {
+    const { email, password, name, profilePicUrl } = req.body;
+    const hashedPassword = bcrypt.hashSync(password);
+    const user = await User.create({ email, hashedPassword, name, profilePicUrl });
 
-    await setTokenCookie(res, user);
+    const safeUser = {
+        id: user.id,
+        email: user.email,
+    }
 
-    return res.json({ user });
-}));
+    await setTokenCookie(res, safeUser);
+
+    return res.json({ user: safeUser });
+});
 
 module.exports = router;
