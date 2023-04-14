@@ -5,7 +5,7 @@ const { ValidationError } = require('sequelize');
 
 router.get('/', async(req, res, next) => {
     let {
-        page, size, minLat, maxLat, minLon, maxLon, minPrice, max Price
+        page, size, minLat, maxLat, minLon, maxLon, minPrice, maxPrice
     } = req.query;
 
     const where = {};
@@ -94,9 +94,62 @@ router.get('/', async(req, res, next) => {
         }
 
         return res.json({
-            ListingsL list,
+            Listings: list,
             page: page,
             size: size
         });
     });
+});
+
+router.get('/:listingId', async(req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId, {
+        attributes: {
+            include: [
+                [sequelize.fn('COUNT', sequelize.col())]
+            ]
+        }
+    })
+
+    if (listing) {
+        const listingObj = listing.toJSON();
+        
+        const reviews = await TreehouseReview.findAll({
+            where: {
+                listingId: req.params.listingId
+            }
+        });
+
+        const reviewList = [];
+        reviews.forEach(review => {
+            reviewList.push(review.toJSON());
+        })
+
+        if (reviewList.length > 0) {
+            let numReviews = reviewList.length;
+            let sumRating = 0;
+
+            reviewList.forEach(review => {
+                if (listing.id === review.listingId) {
+                    numReviews++;
+                    sumRating += review.rating; 
+                }
+            });
+
+            let avgRating = sumRating/numReviews;
+
+            listingObj.avgRating = avgRating;
+            listingObj.numReviews = numReviews;
+        } else {
+            listingObj.avgRating = null;
+            listingObj.numReviews = 0;
+        }
+
+        res.json(listingObj);
+    } else {
+        res.status(404);
+        res.json({
+            message: 'Listing could not be found',
+            statusCode: 404
+        })
+    }
 });
