@@ -153,3 +153,29 @@ router.get('/:listingId', async(req, res) => {
         })
     }
 });
+
+router.get('/:listingId/reviews', async(req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId);
+
+    if (!listing) {
+        res.status(404);
+        return res.json({
+            message: "Listing couldn't be found",
+            statusCode: 404
+        });
+    }
+
+    const reviews = await TreehouseReview.findAll({
+        where: {
+            listingId: req.params.listingId
+        },
+        include: [
+            {
+                model: User,
+                arrtibutes: ['name']
+            }
+        ]
+    });
+
+    return res.json({ Reviews: reviews });
+});
