@@ -3,41 +3,32 @@ const { requireAuth } = require('../../utils/auth');
 const { User, Listing, TreehouseReview, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 
-router.post('/:listingId/reviews', requireAuth, async(req, res) => {
-    const { body, rating } = req.body;
+router.put('/:reviewId', requireAuth, async(req, res) => {
+    const reviewToUpdate = await TreehouseReview.findByPk(req.params.reviewId);
 
-    const listing = await Listing.findByPk(req.params.spotId);
-
-    if (!listing) {
+    if (!reviewToUpdate) {
         res.status(404);
         return res.json({
-            message: "Listing couldn't be found",
+            message: "Review couldn't be found",
             statusCode: 404
         });
     };
 
-    const userReviews = await TreehouseReview.findAll({
-        where: {
-            listingId: req.params.listingId,
-            userId: req.user.id
-        }
-    });
-
-    if (userReviews.length) {
+    if (reviewToUpdate.userId !== res.user.id) {
         res.status(403);
         return res.json({
-            message: "You have already reviewed this Treehouse",
+            message: "Forbidden",
             statusCode: 403
         });
     };
 
-    let review = await TreehouseReview.create({
-        userId: req.user.id,
-        listingId: req.params.listingId,
+    const { body, rating } = req.body;
+
+    await reviewToUpdate.update({
         body: body,
         rating: rating
-    })
+    });
 
-    res.status(201);
-    return res.json(review);
+    return res.json(reviewToUpdate);
 });
+
