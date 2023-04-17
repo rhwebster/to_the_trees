@@ -198,7 +198,34 @@ router.put('/:listingId', requireAuth, async(req, res)  => {
     });
 
     return res.json(listing);
-})
+});
+
+router.delete('/:listingId', requireAuth, async(req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId);
+
+    if (!listing) {
+        res.status(404);
+        return res.json({
+            message: "Listing couldn't be found",
+            statusCode: 404
+        });
+    };
+
+    if (listing.ownerId !== req.user.id) {
+        res.status(403);
+        return res.json({
+            message: "Unauthorized",
+            statusCode: 403
+        });
+    };
+
+    await listing.destroy();
+
+    return res.json({
+        message: "Listing successfully deleted",
+        statusCode: 200
+    });
+});
 
 router.get('/:listingId/reviews', async(req, res) => {
     const listing = await Listing.findByPk(req.params.listingId);
