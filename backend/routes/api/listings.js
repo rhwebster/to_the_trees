@@ -154,6 +154,18 @@ router.get('/:listingId', async(req, res) => {
     }
 });
 
+router.post('/', requireAuth, async(req, res) => {
+    const { name, address, description, maxGuests, pricePerNight, lat, lon } = req.body;
+
+    let listing = await Listing.create({
+        name: name, address: address, ownerId: req.user.id, description: description,
+        maxGuests: maxGuests, pricePerNight: pricePerNight, lat: lat, lon: lon
+    });
+
+    res.status(200);
+    return res.json(listing);
+});
+
 router.get('/:listingId/reviews', async(req, res) => {
     const listing = await Listing.findByPk(req.params.listingId);
 
