@@ -43,4 +43,37 @@ router.post('/', requireAuth, multipleMulterUpload("images"), async (req, res) =
     };
 
     return res.json(res);
-})
+});
+
+router.delete('/:imageId', requireAuth, async(req, res) => {
+    const image = await Image.findByPk(req.params.imageId, {
+        include: {
+            model: Listing
+        }
+    });
+
+    if (!image) {
+        res.status(404);
+        return res.json({
+            message: "Image couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    if (image.Listing.ownerId !== req.user.id) {
+        res.status(403);
+        return res.json({
+            message: "Unauthorized",
+            statusCode: 403
+        })
+    };
+
+    await image.destroy();
+
+    return res.json({
+        message: "Image successfully deleted",
+        statusCode: 200
+    });
+});
+
+module.exports = router;
