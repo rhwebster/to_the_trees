@@ -3,25 +3,52 @@ const { requireAuth } = require('../../utils/auth');
 const { User, Reservation, GuestReview } = require('../../db/models');
 
 router.post('/', requireAuth, async(req, res) => {
-    const { body, rating, guestId } = req.body;
+    const { body, rating, guestId, reservationId } = req.body;
     const ownerId = req.user.id;
 
     const guest = await User.findByPk(guestId);
     const owner = await User.findByPk(ownerId);
+    const reservation = await Reservation.findByPk(reservationId);
 
-    if (!guest) {
+    if (!guest || !reservation) {
         res.status(404);
         return res.json({
-            message: "Guest couldn't be found",
+            message: "Guest's reservation couldn't be found",
             statusCode: 404
         });
     };
 
-    const reservations = await Reservation.findAll({
+    if (owner.id !== reservation.ownerId) {
+        res.status(403);
+        return res.json({
+            message: "You cannot review a guest unless you are the owner of a Treehouse they stayed in",
+            statusCode: 403
+        });
+    };
+
+    const reviews = await GuestReview.findAll({
         where: {
-            
+            reservationId: reservationId
         }
-    })
+    });
+
+    if (reviews.length) {
+        res.status(403);
+        return res.json({
+            message: "You can only review a guest once per stay"
+        })
+    };
+
+    let guestReview = await GuestReview.create({
+        body: body,
+        rating: rating,
+        guestId: guestId,
+        reservationId: reservationId,
+        ownerId: ownerId
+    });
+
+    res.status(201);
+    return res.json(guestReview);
 })
 
 router.put('/:guestReviewId', requireAuth, async(req, res) => {
