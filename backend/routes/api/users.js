@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
-const { User } = require('../../db/models');
+const { User, GuestReview } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 
@@ -33,6 +33,28 @@ router.post('/', validateSignUp, async (req, res) => {
     await setTokenCookie(res, safeUser);
 
     return res.json({ user: safeUser });
+});
+
+router.get('/:guestId/reviews', requireAuth, async (req, res) => {
+    const guest = await User.findByPk(req.params.guestId);
+
+    if (!guest) {
+        res.status(404);
+        return res.json({
+            message: "User couldn't be found",
+            statusCode: 404
+        });
+    };
+
+    const reviews = await GuestReview.findAll({
+        where: {
+            guestId: req.params.guestId
+        }
+    });
+
+    reviews.map(review => review.toJSON());
+
+    return res.json({ Reviews: reviews });
 });
 
 module.exports = router;

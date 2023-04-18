@@ -66,7 +66,7 @@ router.put('/:resyId', requireAuth, async (req, res) => {
 });
 
 router.delete('/:resyId', requireAuth, async(req, res) => {
-    const resy = await Reservation.findByPk(resyId {
+    const resy = await Reservation.findByPk(req.params.resyId, {
         include: {
             model: Listing
         }
