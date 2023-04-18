@@ -38,7 +38,7 @@ router.get('/', async(req, res, next) => {
     if(minLat < -90 || minLat > 90) {
         errorResult.errors.minLat = 'Invalid minimum latitude'
     }
-    if(minLon < -90 || minLon > 90) {
+    if(maxLat < -90 || maxLat > 90) {
         errorResult.errors.maxLat = 'Invalid maximum latitude'
     }
     if(minLon < -180 || minLon > 180) {
@@ -67,12 +67,7 @@ router.get('/', async(req, res, next) => {
         limit: limit,
         offset: offset,
         order: ['id']
-    });
-
-    let list = [];
-    listings.forEach(listing => {
-        list.push(listing.toJSON());
-    })
+    }).map(listing => listing.toJSON());
 
     listings.forEach(listing => {
         let reviews;
@@ -89,7 +84,7 @@ router.get('/', async(req, res, next) => {
         let avgRating = sumRating/reviews;
         listing.rating = avgRating;
 
-        if (!review) {
+        if (!reviews) {
             listing.avgRating = null;
         }
 

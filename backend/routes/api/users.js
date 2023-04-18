@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
-const { User, GuestReview } = require('../../db/models');
+const { User, GuestReview, Listing, Image, TreehouseReview } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 
@@ -56,5 +56,26 @@ router.get('/:guestId/reviews', requireAuth, async (req, res) => {
 
     return res.json({ Reviews: reviews });
 });
+
+router.get('/:ownerId/listings', requireAuth, async(req, res) => {
+    const ownerId = req.params.ownerId;
+    const listings = await Listing.findAll({
+        where: {
+            ownerId: ownerId
+        },
+        include: [{
+            model: Image,
+        },
+        {
+            model: TreehouseReview,
+        }]
+    });
+
+    listings.map(listing => listing.toJSON());
+
+    res.json({
+        Listings: listings
+    });
+})
 
 module.exports = router;
