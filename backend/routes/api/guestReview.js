@@ -6,7 +6,22 @@ router.post('/', requireAuth, async(req, res) => {
     const { body, rating, guestId } = req.body;
     const ownerId = req.user.id;
 
-    
+    const guest = await User.findByPk(guestId);
+    const owner = await User.findByPk(ownerId);
+
+    if (!guest) {
+        res.status(404);
+        return res.json({
+            message: "Guest couldn't be found",
+            statusCode: 404
+        });
+    };
+
+    const reservations = await Reservation.findAll({
+        where: {
+            
+        }
+    })
 })
 
 router.put('/:guestReviewId', requireAuth, async(req, res) => {

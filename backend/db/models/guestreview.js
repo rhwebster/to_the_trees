@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       GuestReview.belongsTo(models.User, { foreignKey: "ownerId" });
       GuestReview.belongsTo(models.User, { foreignKey: "guestId" });
+      GuestReview.belongsTo(models.Reservation, { foreignKey: "reservationId" });
     }
   }
   GuestReview.init({
@@ -29,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     ownerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    reservationId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     }

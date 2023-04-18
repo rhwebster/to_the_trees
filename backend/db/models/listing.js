@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     lon: {
       type: DataTypes.INTEGER
-    },
+    }
   }, {
     sequelize,
     modelName: 'Listing',

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.TreehouseReview, { foreignKey: "guestId" });
       User.hasMany(models.GuestReview, { foreignKey: "ownerId" });
       User.hasMany(models.GuestReview, { foreignKey: "guestId" });
-      User.belongsToMany(models.Listing, { through: "Favorite", foreignKey: "userId" });
+      User.belongsToMany(models.Listing, { through: "Favorite", foreignKey: "userId", otherKey: "listingId" });
     }
   }
   User.init({
