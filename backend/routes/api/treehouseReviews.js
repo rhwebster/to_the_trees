@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
-const { Listing, TreehouseReview } = require('../../db/models');
+const { Listing, TreehouseReview, Reservation } = require('../../db/models');
 
 router.post('/', requireAuth, async (req, res) => {
     const { body, rating, listingId } = req.body;
@@ -16,6 +16,21 @@ router.post('/', requireAuth, async (req, res) => {
         });
     };
 
+    const reservations = await Reservation.findAll({
+        where: {
+            listingId: listingId,
+            guestId: guestId
+        }
+    });
+
+    if (!reservations) {
+        res.status(403);
+        return res.json({
+            message: "You cannot review a treehouse without staying in it",
+            statusCode: 403
+        });
+    };
+
     const userReviews = await TreehouseReview.findAll({
         where: {
             listingId: listingId,
@@ -23,10 +38,10 @@ router.post('/', requireAuth, async (req, res) => {
         }
     });
 
-    if (userReviews.length) {
+    if (userReviews.length > reservations.length) {
         res.status(403);
         return res.json({
-            message: "You have already reviewed this Treehouse",
+            message: "You can only review a Treehouse once per stay",
             statusCode: 403
         });
     };

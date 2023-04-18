@@ -2,6 +2,13 @@ const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
 const { User, Reservation, GuestReview } = require('../../db/models');
 
+router.post('/', requireAuth, async(req, res) => {
+    const { body, rating, guestId } = req.body;
+    const ownerId = req.user.id;
+
+    
+})
+
 router.put('/:guestReviewId', requireAuth, async(req, res) => {
     const reviewToUpdate = await GuestReview.findByPk(req.params.guestReviewId);
 
