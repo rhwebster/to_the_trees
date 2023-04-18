@@ -1,34 +1,29 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import session from './session';
-import favoriteReducer from './favorites';
-import listingsReducer from './listings';
-import reservationsReducer from './reservations';
-import usersReducer from './user';
-import applicationsReducer from './rentalApps';
+import { applyMiddleware, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const rootReducer = combineReducers({
-  session: session,
-  listings: listingsReducer,
-  reservations: reservationsReducer,
-  favorites: favoriteReducer,
-  users: usersReducer,
-  applications: applicationsReducer,
-});
+import monitorReducersEnhancer from './enhancers/monitorReducers'
+import loggerMiddleware from './middleware/logger';
+import rootReducer from './reducers'
 
-let enhancer;
+export default function configureStore(preloadedState) {
+    const middlewares = [loggerMiddleware, thunkMiddleware]
+    const middlewareEnhancer = applyMiddleware(...middlewares)
 
-if (process.env.NODE_ENV === 'production') {
-  enhancer = applyMiddleware(thunk);
-} else {
-  const logger = require('redux-logger').default;
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+    const enhancers = [middlewareEnhancer, monitorReducersEnhancer]
+    const composedEnhancers = composeWithDevTools(...enhancers)
+
+    const store = createStore(rootReducer, preloadedState, composedEnhancers)
+
+    return store;
 }
 
-const configureStore = (preloadedState) => {
-  return createStore(rootReducer, preloadedState, enhancer);
-};
+if (process.env.NODE_ENV === 'production') {
+    enhancer = applyMiddleware(thunk);
+} else {
+    const logger = require('redux-logger').default;
+    const composeEnhancers =
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+}
 
-export default configureStore;
