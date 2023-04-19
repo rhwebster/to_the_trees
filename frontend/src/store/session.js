@@ -10,6 +10,12 @@ const setUser = (user) => {
     };
 };
 
+const removeUser = () => {
+    return {
+        type: REMOVE_USER,
+    };
+};
+
 export const login = (user) => async (dispatch) => {
     const { email, password } = user;
     const res = await csrfFetch("/api/session", {
@@ -32,6 +38,10 @@ const sessionReducer = (state = initialState, action) => {
         case SET_USER:
             newState = Object.assign({}, state);
             newState.user = action.payload;
+            return newState;
+        case REMOVE_USER:
+            newState = Object.assign({}, state);
+            newState.user = null;
             return newState;
         default:
             return state;
