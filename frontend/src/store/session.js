@@ -37,7 +37,7 @@ export const signUp = (user) => async dispatch => {
         body: JSON.stringify({
             email, name, profilePicUrl, password
         })
-    }
+    };
 
     const res = await csrfFetch('/api/users', options);
 
@@ -48,6 +48,25 @@ export const signUp = (user) => async dispatch => {
     } else {
         const error = await res.json();
         return error;
+    }
+};
+
+export const logOut = () => async dispatch => {
+    const res = await csrfFetch('/api/session', {
+        method: 'DELETE'
+    });
+
+    const data = await res.json();
+    dispatch(removeUser());
+    return data;
+};
+
+export const getCurrentUser = () => async dispatch => {
+    const res = await csrfFetch('/api/session');
+    if (res.ok) {
+        const user = await res.json();
+        dispatch(setUser(user));
+        return user;
     }
 }
 
