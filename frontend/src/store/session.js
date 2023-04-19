@@ -30,6 +30,27 @@ export const login = (user) => async (dispatch) => {
     return res;
 };
 
+export const signUp = (user) => async dispatch => {
+    const { email, password, name, profilePicUrl } = user;
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({
+            email, name, profilePicUrl, password
+        })
+    }
+
+    const res = await csrfFetch('/api/users', options);
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(setUser(data));
+        return data;
+    } else {
+        const error = await res.json();
+        return error;
+    }
+}
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {

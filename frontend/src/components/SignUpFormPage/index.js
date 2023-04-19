@@ -5,7 +5,7 @@ import * as sessionActions from '../../store/session';
 
 import './index.css';
 
-SignupForm({setShowSignUpModal}) {
+const SignupForm = ({setShowSignUpModal}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ SignupForm({setShowSignUpModal}) {
 
         if (password === confirmPassword) {
             setErrors([]);
-            let res = await dispatch(sessionActions.signUp({ email, name, profilePicUrl, password }));
+            let res = await dispatch(sessionActions.signUp({ email, password, name, profilePicUrl }));
             let errors = [];
             for (let error in res.errors) {
                 errors.push(res.errors[error])
@@ -43,7 +43,7 @@ SignupForm({setShowSignUpModal}) {
         <div className='signup-form'>
             <div className='signup-exit-holder'>
                 <div className='halfwidth flex'>
-                <div onClick={() => setShowSignUpModal(falase)} className='circle signup'>
+                <div onClick={() => setShowSignUpModal(false)} className='circle signup'>
                 <i id="exit-reviews" className="fa-solid fa-xmark"></i>
                 </div>
                 <h4>Sign Up</h4>
@@ -51,4 +51,6 @@ SignupForm({setShowSignUpModal}) {
             </div>
         </div>
     )
-}
+};
+
+export default SignupForm;
