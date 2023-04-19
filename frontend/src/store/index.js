@@ -1,10 +1,11 @@
-import { configureStore, getDefaultMiddleware } from 'react-redux'
+import { configureStore, getDefaultMiddleware } from 'react-redux';
 import { combineReducers } from 'redux';
 import monitorReducersEnhancer from "../enhancers/monitorReducer";
-import loggerMiddleware from '../middleware/logger'
+import loggerMiddleware from '../middleware/logger';
+import sessionReducer from './session';
 
 const rootReducer = combineReducers({
-
+    session: sessionReducer,
 });
 
 export default function configureAppStore(preloadedState) {
