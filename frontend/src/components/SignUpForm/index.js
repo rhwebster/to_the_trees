@@ -40,7 +40,7 @@ const SignupForm = ({setShowSignUpModal}) => {
     };
 
     return (
-        <div className='signup-form'>
+        <div className='form-card'>
             <div className='signup-exit-holder'>
                 <div className='halfwidth flex'>
                 <div onClick={() => setShowSignUpModal(false)} className='circle signup'>
@@ -48,6 +48,39 @@ const SignupForm = ({setShowSignUpModal}) => {
                 </div>
                 <h4>Sign Up</h4>
                 </div>
+            </div>
+            <div className='form-holder'>
+                <form className='signup-form' onSubmit={handleSubmit}>
+                    <h4 className='signup-header'>Welcome to ToTheTrees: The best treehouses await</h4>
+                    <div className='signup-exterior'>
+                        <div className='input-fields'>
+                            <label className='label' id='email'>Email</label>
+                            <input className='signup-input' type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
+                        </div>
+                        <div className='input-fields'>
+                            <label className='label' id='name'>Name</label>
+                            <input className='signup-input' type='text' value={name} onChange={(e) => setName(e.target.value)} />
+                        </div>
+                        <div className='input-fields'>
+                            <label className='label' id='profilePicUrl'>Profile Picture (optional)</label>
+                            <input className='signup-input' type='text' value={profilePicUrl} onChange={(e) => setProfilePicUrl(e.target.value)} />
+                        </div>
+                        <div className='input-fields'>
+                            <label className='label' id='password'>Password</label>
+                            <input className='signup-input' type='text' value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                        <div className='input-fields'>
+                            <label className='label' id='confirm password'>Confirm Password</label>
+                            <input className='signup-input' type='text' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                        </div>
+                    </div>
+                    <ul>
+                        {errors && errors.map((err, i) => <li key={i}>{err}</li>)}
+                    </ul>
+                    <div className='button-holder'>
+                        <button type='submit' className='signup-button'>Sign Up</button>
+                    </div>
+                </form>
             </div>
         </div>
     )
