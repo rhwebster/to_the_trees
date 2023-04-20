@@ -57,7 +57,7 @@ const LoginForm = ({setShowLoginModal}) => {
                         {errors && (errors.map((err, i) => <li key={i}>{err}</li>))}
                     </ul>
                     <div className='button-holder'>
-                        <button type='submit' className='login-button'>Log In</button>
+                        <input type='submit' className='login-button'>Log In</input>
                     </div>
                 </form>
             </div>

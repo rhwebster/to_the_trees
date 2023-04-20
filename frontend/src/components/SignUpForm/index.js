@@ -78,7 +78,7 @@ const SignupForm = ({setShowSignUpModal}) => {
                         {errors && errors.map((err, i) => <li key={i}>{err}</li>)}
                     </ul>
                     <div className='button-holder'>
-                        <button type='submit' className='signup-button'>Sign Up</button>
+                        <input type='submit' className='signup-button'>Sign Up</input>
                     </div>
                 </form>
             </div>
