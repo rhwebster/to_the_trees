@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
-const { User, Listing, TreehouseReview, sequelize } = require('../../db/models');
+const { User, Listing, TreehouseReview, Image, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 
 router.get('/', async(req, res, next) => {
@@ -61,69 +61,36 @@ router.get('/', async(req, res, next) => {
     })
 });
 
-router.get('/:listingId', async(req, res) => {
+router.get('/:listingId', async (req, res) => {
     const listing = await Listing.findByPk(req.params.listingId, {
-        attributes: {
-            include: [
-                [sequelize.fn('COUNT', sequelize.col())]
-            ]
-        }
-    })
+        include: [
+            {
+                model: Image,
+            },
+            {
+                model: TreehouseReview,
+            }      
+        ]
+    });
 
-    if (listing) {
-        const listingObj = listing.toJSON();
-        
-        const reviews = await TreehouseReview.findAll({
-            where: {
-                listingId: req.params.listingId
-            }
-        });
-
-        const reviewList = [];
-        reviews.forEach(review => {
-            reviewList.push(review.toJSON());
-        })
-
-        if (reviewList.length > 0) {
-            let numReviews = reviewList.length;
-            let sumRating = 0;
-
-            reviewList.forEach(review => {
-                if (listing.id === review.listingId) {
-                    numReviews++;
-                    sumRating += review.rating; 
-                }
-            });
-
-            let avgRating = sumRating/numReviews;
-
-            listingObj.avgRating = avgRating;
-            listingObj.numReviews = numReviews;
-        } else {
-            listingObj.avgRating = null;
-            listingObj.numReviews = 0;
-        }
-
-        res.json(listingObj);
-    } else {
+    if (!listing) {
         res.status(404);
-        res.json({
-            message: 'Listing could not be found',
-            statusCode: 404
-        })
-    }
+        return res.json({ message: "Listing couldn't be found" });
+    };
+
+    return res.json(listing);
 });
 
 router.post('/', requireAuth, async(req, res) => {
     const { name, address, description, maxGuests, pricePerNight, lat, lon } = req.body;
 
-    let listing = await Listing.create({
-        name: name, address: address, ownerId: req.user.id, description: description,
-        maxGuests: maxGuests, pricePerNight: pricePerNight, lat: lat, lon: lon
+    let newListing = await Listing.create({
+        name, address, ownerId: req.user.id, description, 
+        maxGuests, pricePerNight, lat, lon
     });
 
     res.status(200);
-    return res.json(listing);
+    return res.json(newListing);
 });
 
 router.put('/:listingId', requireAuth, async(req, res)  => {
@@ -133,10 +100,7 @@ router.put('/:listingId', requireAuth, async(req, res)  => {
 
     if (!listing) {
         res.status(404);
-        return res.json({
-            message: "Listing couldn't be found",
-            statusCode: 404
-        });
+        return res.json({ message: "Listing couldn't be found" });
     };
 
     if (listing.ownerId !== req.user.id) {
