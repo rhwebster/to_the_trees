@@ -27,16 +27,14 @@ const SignupForm = ({setShowSignUpModal}) => {
         e.preventDefault();
 
         if (password === confirmPassword) {
-            setErrors([]);
-            let res = await dispatch(sessionActions.signUp({ email, password, name, profilePicUrl }));
-            let errors = [];
-            for (let error in res.errors) {
-                errors.push(res.errors[error])
-            }
-            setErrors(errors);
-            return;
+            setErrors({});
+            return dispatch(sessionActions.signUp({ email, password, name, profilePicUrl }))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors)
+            });
         }
-        return setErrors(['Password and Confirm Password fields must be the same']);
+        return setErrors({ confirmPassword: 'Password and Confirm Password fields must be the same' });
     };
 
     return (
@@ -78,7 +76,7 @@ const SignupForm = ({setShowSignUpModal}) => {
                         {errors && errors.map((err, i) => <li key={i}>{err}</li>)}
                     </ul>
                     <div className='button-holder'>
-                        <button type='submit' className='signup-button'>Sign Up</button>
+                        <input type='submit' className='signup-button'>Sign Up</input>
                     </div>
                 </form>
             </div>

@@ -11,23 +11,18 @@ const LoginForm = ({setShowLoginModal}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors([]);
-        const res = await dispatch(sessionActions.login({ email, password }));
-        let errors = [];
-        if (res.message === 'Invalid Credentials') errors.push('Invalid Credentials')
-
-        if ((res && res.errors) || (res && res.message)) {
-            for (let err in res.errors) {
-                errors.push(res.errors[err])
+        setErrors({});
+        dispatch(sessionActions.login({ email, password }))
+        .catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors)
             }
-            setErrors(errors);
-            return;
-        } else {
-            setEmail('');
-            setPassword('');
-            setErrors([]);
-            setShowLoginModal(false)
-        }
+        );
+        setEmail('');
+        setPassword('');
+        setErrors([]);
+        setShowLoginModal(false);
     }
 
     return (
@@ -57,7 +52,7 @@ const LoginForm = ({setShowLoginModal}) => {
                         {errors && (errors.map((err, i) => <li key={i}>{err}</li>))}
                     </ul>
                     <div className='button-holder'>
-                        <button type='submit' className='login-button'>Log In</button>
+                        <input type='submit' className='login-button'>Log In</input>
                     </div>
                 </form>
             </div>
