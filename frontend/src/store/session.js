@@ -32,19 +32,17 @@ export const login = (user) => async (dispatch) => {
 
 export const signUp = (user) => async dispatch => {
     const { email, password, name, profilePicUrl } = user;
-    const options = {
+    const res = await csrfFetch('/api/users', {
         method: 'POST',
         body: JSON.stringify({
             email, name, profilePicUrl, password
         })
-    };
-
-    const res = await csrfFetch('/api/users', options);
+    });
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(setUser(data));
-        return data;
+        dispatch(setUser(data.user));
+        return res;
     } else {
         const error = await res.json();
         return error;
@@ -61,12 +59,12 @@ export const logOut = () => async dispatch => {
     return data;
 };
 
-export const getCurrentUser = () => async dispatch => {
+export const restoreUser = () => async dispatch => {
     const res = await csrfFetch('/api/session');
     if (res.ok) {
-        const user = await res.json();
-        dispatch(setUser(user));
-        return user;
+        const data = await res.json();
+        dispatch(setUser(data.user));
+        return res;
     }
 }
 
