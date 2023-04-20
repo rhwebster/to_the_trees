@@ -32,23 +32,12 @@ router.get('/', async(req, res, next) => {
 
     const offset = size * (page-1);
 
-    if (!isNaN(minLat) && minLat > -90 && minLat < 90) where.minLat = parseInt(minLat);
-    else errorResult.errors.minLat = 'Invalid minimum latitude';
-
-    if (!isNaN(maxLat) && maxLat > -90 && maxLat < 90) where.maxLat = parseInt(maxLat);
-    else errorResult.errors.maxLat = 'Invalid maximum latitude'
-
-    if (!isNaN(minLon) && minLon > -180 && minLon < 180) where.minLon = parseInt(minLon);
-    else errorResult.errors.minLon = 'Invalid minimum longitude'
-    
-    if (!isNaN(maxLon) && maxLon > -180 && maxLon < 180) where.maxLon = parseInt(maxLon);
-    else errorResult.errors.minLat = 'Invalid maximum longitude'
-    
-    if (minPrice > 0) where.minPrice = parseInt(minPrice)
-    else errorResult.errors.minPrice = "Minumum price must be greater than 0"
-    
-    if (maxPrice > 0 && maxPrice >= minPrice) where.maxPrice = parseInt(maxPrice)
-    else errorResult.errors.maxPrice = "Maximum price must be greater than 0"
+    where.minLat = (!isNaN(minLat) && minLat > -90 && minLat < 90) ? parseInt(minLat) : -90;
+    where.maxLat = (!isNaN(maxLat) && maxLat > -90 && maxLat < 90) ? parseInt(maxLat) : 90;
+    where.minLon = (!isNaN(minLon) && minLon > -180 && minLon < 180) ? parseInt(minLon) : -180;
+    where.maxLon = (!isNaN(maxLon) && maxLon > -180 && maxLon < 180) ? parseInt(maxLon) : 180;
+    where.minPrice = (!isNaN(minPrice) && minPrice > 0) ? parseInt(minPrice) : 0;
+    where.maxPrice = (!isNaN(maxPrice) && maxPrice > minPrice) ? parseInt(maxPrice) : Infinity;
 
     if (Object.keys(errorResult.errors).length) {
         res.status(400);
