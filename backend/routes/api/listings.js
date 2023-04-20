@@ -247,3 +247,22 @@ router.get('/:listingId/reviews', async(req, res) => {
 
     return res.json({ Reviews: reviews });
 });
+
+router.get('/:listingId/images', async(req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId);
+    if (!listing) {
+        res.status(404);
+        return res.json({
+            message: "Listing couldn't be found",
+            statusCode: 404
+        });
+    }
+
+    const images = await Image.findAll({
+        where: {
+            listingId: req.params.listingId
+        }
+    })
+
+    return res.json({ Images: images });
+})

@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import { restoreUser } from './store/session';
 
-import SignupForm from './components/SignUpForm'
+import SignupForm from './components/SignUpForm';
+import NavBar from './components/NavBar';
 
 function App() {
   const dispatch = useDispatch();
