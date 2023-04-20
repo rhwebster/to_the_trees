@@ -8,6 +8,20 @@ router.get('/', async(req, res, next) => {
         page, size, minLat, maxLat, minLon, maxLon, minPrice, maxPrice
     } = req.query;
 
+    page = parseInt(page);
+    size = parseInt(size);
+    if (!page || isNaN(page) || page < 1) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    };
+
+    if (!size || size > 10 || isNaN(size) || size < 1) {
+        size = 10;
+    } else {
+        size = parseInt(size);
+    }
+
     const where = {};
 
     const errorResult = {
@@ -16,43 +30,25 @@ router.get('/', async(req, res, next) => {
         errors: {}
     }
 
-    if (!page) {
-        page = 1;
-    } else if (isNaN(page) || page < 1) {
-        errorResult.errors.page = 'Page must be greater than or equal to 1';
-    } else {
-        page = parseInt(page);
-    };
-
-    if (!size || size > 20) {
-        size = 20;
-    } else if (isNaN(size) || size < 1) {
-        errorResult.errors.size = 'Size must be greater than or equal to 1';
-    } else {
-        size = parseInt(size);
-    }
-
-    const limit = size;
     const offset = size * (page-1);
 
-    if(minLat < -90 || minLat > 90) {
-        errorResult.errors.minLat = 'Invalid minimum latitude'
-    }
-    if(maxLat < -90 || maxLat > 90) {
-        errorResult.errors.maxLat = 'Invalid maximum latitude'
-    }
-    if(minLon < -180 || minLon > 180) {
-        errorResult.errors.minLon = 'Invalid minimum longitude'
-    }
-    if(maxLon < -180 || maxLon > 180) {
-        errorResult.errors.minLat = 'Invalid maximum longitude'
-    }
-    if (minPrice < 1) {
-        errorResult.errors.minPrice = "Minumum price must be greater than 0"
-    }
-    if (maxPrice < 1) {
-        errorResult.errors.maxPrice = "Maximum price must be greater than 0"
-    }
+    if (!isNaN(minLat) && minLat > -90 && minLat < 90) where.minLat = parseInt(minLat);
+    else errorResult.errors.minLat = 'Invalid minimum latitude';
+
+    if (!isNaN(maxLat) && maxLat > -90 && maxLat < 90) where.maxLat = parseInt(maxLat);
+    else errorResult.errors.maxLat = 'Invalid maximum latitude'
+
+    if (!isNaN(minLon) && minLon > -180 && minLon < 180) where.minLon = parseInt(minLon);
+    else errorResult.errors.minLon = 'Invalid minimum longitude'
+    
+    if (!isNaN(maxLon) && maxLon > -180 && maxLon < 180) where.maxLon = parseInt(maxLon);
+    else errorResult.errors.minLat = 'Invalid maximum longitude'
+    
+    if (minPrice > 0) where.minPrice = parseInt(minPrice)
+    else errorResult.errors.minPrice = "Minumum price must be greater than 0"
+    
+    if (maxPrice > 0 && maxPrice >= minPrice) where.maxPrice = parseInt(maxPrice)
+    else errorResult.errors.maxPrice = "Maximum price must be greater than 0"
 
     if (Object.keys(errorResult.errors).length) {
         res.status(400);
@@ -64,36 +60,16 @@ router.get('/', async(req, res, next) => {
         include: [{
             model: Image
         }],
-        limit: limit,
+        limit: size,
         offset: offset,
         order: ['id']
-    }).map(listing => listing.toJSON());
-
-    listings.forEach(listing => {
-        let reviews = 0;
-        let numReviews = 0;
-        let sumRating = 0;
-        list.forEach(review => {
-            if (listing.id === treehouseReview.listingId) {
-                numReviews++;
-                sumRating += treehouseReview.rating;
-                reviews++;
-            }
-        })
-
-        let avgRating = sumRating/reviews;
-        listing.rating = avgRating;
-
-        if (!reviews) {
-            listing.avgRating = null;
-        }
-
-        return res.json({
-            Listings: list,
-            page: page,
-            size: size
-        });
     });
+
+    return res.json({
+        listings,
+        page,
+        size
+    })
 });
 
 router.get('/:listingId', async(req, res) => {
