@@ -70,14 +70,14 @@ router.get('/', async(req, res, next) => {
     }).map(listing => listing.toJSON());
 
     listings.forEach(listing => {
-        let reviews;
+        let reviews = 0;
         let numReviews = 0;
         let sumRating = 0;
         list.forEach(review => {
             if (listing.id === treehouseReview.listingId) {
                 numReviews++;
                 sumRating += treehouseReview.rating;
-                reviews = true;
+                reviews++;
             }
         })
 
