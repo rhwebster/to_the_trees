@@ -265,4 +265,4 @@ router.get('/:listingId/images', async(req, res) => {
     })
 
     return res.json({ Images: images });
-})
+});
