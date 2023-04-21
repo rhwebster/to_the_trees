@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Listing.belongsToMany(models.User, { through: "Reservation", foreignKey: "listingId", otherKey: "guestId" });
       Listing.belongsToMany(models.User, { through: "TreehouseReview", foreignKey: "listingId", otherKey: "guestId" });
       Listing.belongsToMany(models.User, { through: "Favorite", foreignKey: "listingId", otherKey: "userId" });
+      Listing.belongsTo(models.Image, { foreignKey: "previewImageId" });
     }
   }
   Listing.init({
@@ -24,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    cityState: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -48,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     lon: {
       type: DataTypes.INTEGER
+    },
+    previewImageId: {
+      type: DataTypes.INTEGER,
+      defaultValue: false,
     }
   }, {
     sequelize,

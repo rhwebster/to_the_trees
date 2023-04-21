@@ -82,11 +82,12 @@ router.get('/:listingId', async (req, res) => {
 });
 
 router.post('/', requireAuth, async(req, res) => {
-    const { name, address, description, maxGuests, pricePerNight, lat, lon } = req.body;
+    const { name, address, cityState, description, maxGuests, 
+        pricePerNight, lat, lon, previewImageId } = req.body;
 
     let newListing = await Listing.create({
-        name, address, ownerId: req.user.id, description, 
-        maxGuests, pricePerNight, lat, lon
+        name, address, cityState, ownerId: req.user.id, description, 
+        maxGuests, pricePerNight, lat, lon, previewImageId, rating: null
     });
 
     res.status(200);
@@ -94,8 +95,10 @@ router.post('/', requireAuth, async(req, res) => {
 });
 
 router.put('/:listingId', requireAuth, async(req, res)  => {
-    const { name, address, description, maxGuests, pricePerNight, lat, lon } = req.body;
+    const { name, address, cityState, description, maxGuests, 
+        pricePerNight, lat, lon, previewImageId, rating } = req.body;
     
+    const ownerId = req.user.id;
     const listing = await Listing.findByPk(req.params.listingId);
 
     if (!listing) {
@@ -114,11 +117,15 @@ router.put('/:listingId', requireAuth, async(req, res)  => {
     await listing.update({
         name: name,
         address: address,
+        cityState: cityState,
+        ownerId: ownerId,
         description: description,
         maxGuests: maxGuests,
         pricePerNight: pricePerNight,
         lat: lat,
-        lon: lon
+        lon: lon,
+        previewImageId: previewImageId,
+        rating: rating
     });
 
     return res.json(listing);
@@ -195,3 +202,5 @@ router.get('/:listingId/images', async(req, res) => {
 
     return res.json({ Images: images });
 });
+
+module.exports = router;

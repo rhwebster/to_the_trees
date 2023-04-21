@@ -1,6 +1,11 @@
 const router = require('express').Router();
 const sessionRouter = require('./session');
 const usersRouter = require('./users');
+const listingsRouter = require('./listings');
+const treehouseReviewsRouter = require('./treehouseReviews');
+const guestReviewsRouter = require('./guestReviews');
+const imageRouter = require('./images');
+const resyRouter = require('./reservations');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
@@ -10,6 +15,11 @@ router.use(restoreUser);
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
+router.use('/listings', listingsRouter);
+router.use('/treehouseReviews', treehouseReviewsRouter);
+router.use('/guestReviews', guestReviewsRouter);
+router.use('/images', imageRouter);
+router.use('/resys', resyRouter);
 
 router.get('/set-token-cookie', async (_req, res) => {
     const user = await User.findOne({
