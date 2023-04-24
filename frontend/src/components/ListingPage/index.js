@@ -6,6 +6,7 @@ import { getOneListing } from "../../store/listing";
 import { getTreehouseReviews } from "../../store/treehousereview";
 
 import ListingReviewsPreview from './ListingReviewsPreview';
+import ListingReviews from "../ListingReviewsModal/ListingReviews";
 
 import { Modal } from '../../context/Modal';
 
@@ -20,8 +21,7 @@ const ListingDetails = () => {
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    if (showModal) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
+    document.body.style.overflow = showModal ? 'hidden' : 'unset';
 
     useEffect(() => {
         if (showModal || showReviewForm) {
@@ -110,9 +110,16 @@ const ListingDetails = () => {
             </div>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    <listingReviews
+                    <ListingReviews setShowModal={setShowModal} listingId={listingId} rating={listing.rating}/>
                 </Modal>
             )}
-        )
-    }
-}
+            {showReviewForm && (
+                <Modal onClose={() => setShowReviewForm(false)}>
+                    <CreateReview listingId={listingId} listing={listing} setShowReviewForm={setShowReviewForm}/>
+                </Modal>
+            )}
+    </div>
+    )
+};
+
+export default ListingDetails;
