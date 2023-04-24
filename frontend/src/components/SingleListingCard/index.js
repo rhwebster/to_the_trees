@@ -12,7 +12,7 @@ const SingleListingCard = ({ listing }) => {
         <Link to={`/listings/${listing.id}`}>
             <div className='listing-card-top'>
                 <div className='listing-image-holder'>
-                    <img className='listing-image' src={listing.previewImageId} />
+                    <img className='listing-image' src={listing.previewImageId} alt='Preview of Listing' />
                 </div>
             </div>
             <div className='listing-card-bottom'>

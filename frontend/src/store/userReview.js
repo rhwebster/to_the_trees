@@ -30,7 +30,7 @@ export const getUserReviews = (userId) => async (dispatch) => {
     }
 };
 
-export const addGuestReview = (userId, data) => async (dispatch) => {
+export const createGuestReview = (userId, data) => async (dispatch) => {
     const res = await csrfFetch(`/api/guestReviews/`, {
         method: 'POST',
         body: JSON.stringify(data)

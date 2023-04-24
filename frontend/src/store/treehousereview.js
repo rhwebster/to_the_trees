@@ -1,6 +1,6 @@
 import { csrfFetch } from './csrf';
 
-const TREEHOUSE_REVIEWS = 'reviews/treehouseReviews';
+const TREEHOUSE_REVIEWS = 'reviews/treehouseReview';
 const DELETE_REVIEW = 'reviews/deleteReview';
 
 
@@ -79,7 +79,7 @@ export const deleteTreehouseReview = (id) => async (dispatch) => {
     }
 }
 
-const initialState = { listingReviews: {} };
+const initialState = {};
 
 const treehouseReviewReducer = (state = initialState, action) => {
     switch (action.type) {
