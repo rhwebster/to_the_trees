@@ -79,7 +79,7 @@ export const deleteTreehouseReview = (id) => async (dispatch) => {
     }
 }
 
-const initialState = { listingReviews: {} };
+const initialState = {};
 
 const treehouseReviewReducer = (state = initialState, action) => {
     switch (action.type) {
