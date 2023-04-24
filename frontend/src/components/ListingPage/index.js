@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link, useHistory } from "react-router-dom";
 
 import { getOneListing } from "../../store/listing";
-import { getTreehouseReviews } from "../../store/treehousereview";
+import { getTreehouseReviews } from "../../store/treehouseReview";
 
 import ListingReviewsPreview from './ListingReviewsPreview';
 import ListingReviews from "../ListingReviewsModal/ListingReviews";
@@ -44,7 +44,7 @@ const ListingDetails = () => {
 
     const listing = useSelector(state => state.listings.singleListing);
     const user = useSelector(state => state.session.user);
-    const listingReviews = useSelector(state => state.treehouseReviews.listingReviews);
+    const listingReviews = useSelector(state => state.treehouseReviews);
     const ownerFirstName = user.name.split(' ')[0];
 
     let reviews = Object.values(listingReviews);

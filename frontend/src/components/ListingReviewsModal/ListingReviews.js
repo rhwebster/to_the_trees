@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTreehouseReviews } from "../../store/treehousereview";
+import { getTreehouseReviews } from "../../store/treehouseReview";
 import ListingReviewCard from '../ListingPage/ListingReviewCard';
 
 import './ListingReviews.css';

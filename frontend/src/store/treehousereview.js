@@ -1,6 +1,6 @@
 import { csrfFetch } from './csrf';
 
-const TREEHOUSE_REVIEWS = 'reviews/treehouseReviews';
+const TREEHOUSE_REVIEWS = 'reviews/treehouseReview';
 const DELETE_REVIEW = 'reviews/deleteReview';
 
 

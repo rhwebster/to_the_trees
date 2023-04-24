@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import monitorReducersEnhancer from "../enhancers/monitorReducer";
 import loggerMiddleware from '../middleware/logger';
 import sessionReducer from './session';
-import treehouseReviewReducer from './treehousereview';
+import treehouseReviewReducer from './treehouseReview';
 import listingReducer from './listing';
 import guestReviewReducer from './userReview';
 
