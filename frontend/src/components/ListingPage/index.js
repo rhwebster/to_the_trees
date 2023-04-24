@@ -7,6 +7,9 @@ import { getTreehouseReviews } from "../../store/treehousereview";
 
 import ListingReviewsPreview from './ListingReviewsPreview';
 import ListingReviews from "../ListingReviewsModal/ListingReviews";
+import ListingImages from '../ListingPage/ListingImages';
+import ListingReservations from '../ListingPage/ListingReservations';
+import CreateReview from '../ListingReviewsModal/ListingReviews';
 
 import { Modal } from '../../context/Modal';
 
@@ -72,11 +75,9 @@ const ListingDetails = () => {
                         <span> {listing.cityState} </span>
                         <span> ${listing.pricePreNight} / night </span>
                         </h4>
-                        {user && user.id === listing.ownerId && (
+                        {(user && (user.id === listing.ownerId)) && (
                         <div className="edit-button">
-                            <Link className="underline" to {`/listings/${listingId}/edit`}>
-                                Edit
-                            </Link>
+                            <Link className="underline" to={`/listings/${listing.id}/edit`}>Edit</Link>
                         </div>
                         )}
                 </div> 

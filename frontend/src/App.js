@@ -6,6 +6,9 @@ import { restoreUser } from './store/session';
 
 import SignupForm from './components/SignUpForm';
 import NavBar from './components/NavBar';
+import Listings from './components/ListingsPage';
+import ListingDetails from './components/ListingPage';
+import EditListingForm from ''
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +26,15 @@ function App() {
         <Switch>
           <Route path='/signup'>
             <SignupForm />
+          </Route>
+          <Route exact path='/'>
+            <Listings />
+          </Route>
+          <Route path='/listings/:listingId'>
+            <ListingDetails />
+          </Route>
+          <Route path='/listings/:listingId/edit'>
+            <EditListingForm />
           </Route>
           <Route>
             404 Page Not Found
