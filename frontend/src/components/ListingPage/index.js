@@ -5,6 +5,8 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import { getOneListing } from "../../store/listing";
 import { getTreehouseReviews } from "../../store/treehousereview";
 
+import ListingReviewsPreview from './ListingReviewsPreview';
+
 import { Modal } from '../../context/Modal';
 
 import './index.css';
@@ -45,61 +47,72 @@ const ListingDetails = () => {
     let reviews = Object.values(listingReviews);
     const images = listing.Images;
     const owner = listing.Owner;
-    
-    if (!isLoaded) {
-        return(
-            <></>
-        )
-    } else {
-        return (
-            <div className="flex center">
-                <div className="info-holder">
-                    <div className="title-card">
-                        <h2 id="title">{listing.name}</h2>
-                        <div "flex title-lower">
-                            <h4>
-                                <i className="fa-solid fa-star"/>{listing.rating}
-                                <span> - </span>
-                                <Link className="underling" to onClick={(e) => {
-                                    e.preventDefault();
-                                    setShowModal(true);
-                                }}>{reviews.length} {(reviews.length !== 1) && `reviews`}{reviews.length === 1 && `review`}
-                                </Link>
-                                <span>{listing.cityState}</span>
-                                <span>${listing.pricePreNight} / night</span>
-                            </h4>
-                            {user && user.id === listing.ownerId && (
-                                <div className="edit-button">
-                                    <Link className="underline" to {`/listings/${listingId}/edit`}>
-                                        Edit
-                                    </Link>
-                                </div>
-                            )}
-                        </div> 
-                    </div>
-                    <ListingImages preview={listing.preview} />
-                    <div id="user-info" className="display-info">
-                        {listing.ownerId !== user.id ? (
-                            <h2>Treehouse hosted by {ownerFirstName}</h2>
-                        ) : (
-                            <>
-                                <h2>This is your treehouse</h2>
-                                <p>You can edit your rental from the edit page above</p>
-                            </>
-                        )}
-                    </div>
-                    <div className="display-info">
-                        <p>{listing.description}</p>
-                    </div>
-                    {listing.ownerId !== user.id && (
-                        <div className="displlay-info">
-                        <ListingReservations listing={listing}/>
-                        </div>
-                    )}
-                    <div className="display-info">
 
+    let alreadyReviewed;
+    for (let review in reviews) {
+        if (user.id === review.guestID) alreadyReviewed = true;
+    }
+    
+    return !isLoaded ? (
+    <></>
+    ) : (
+    <div className="flex center">
+        <div className="info-holder">
+            <div className="title-card">
+                <h2 id="title">{listing.name}</h2>
+                <div className="flex title-lower">
+                    <h4>
+                    <i className="fa-solid fa-star"/>{listing.rating}
+                        <span>  </span>
+                        <Link className="underline" to onClick={(e) => {
+                            e.preventDefault();
+                            setShowModal(true);
+                            }}>{reviews.length} {(reviews.length !== 1) ? `reviews` : `review`}
+                        </Link>
+                        <span> {listing.cityState} </span>
+                        <span> ${listing.pricePreNight} / night </span>
+                        </h4>
+                        {user && user.id === listing.ownerId && (
+                        <div className="edit-button">
+                            <Link className="underline" to {`/listings/${listingId}/edit`}>
+                                Edit
+                            </Link>
+                        </div>
+                        )}
+                </div> 
+            </div>
+            <ListingImages preview={listing.preview} />
+            <div id="user-info" className="display-info">
+                {listing.ownerId !== user.id ? (
+                <h2>Treehouse hosted by {ownerFirstName}</h2>
+                ) : (
+                <>
+                    <h2>This is your treehouse</h2>
+                    <p>You can edit your rental from the edit page above</p>
+                </>
+                )}
+                </div>
+                <div className="display-info">
+                    <p>{listing.description}</p>
+                </div>
+                {listing.ownerId !== user.id && (
+                <div className="displlay-info">
+                    <ListingReservations listing={listing}/>
+                </div>
+                )}
+                <div className="display-info">
+                    <ListingReviewsPreview setShowModal={setShowModal} listingId={listingId} rating={listing.rating}/>
+                    <button className="show-all-reviews" onClick={() => setShowModal(true)}>Show all reviews</button>
+                    {(user && (user.id !== listing.ownerId) && !alreadyReviewed) &&
+                        <button className="review-button" onClick={() => setShowReviewForm(true)}>Review this Treehouse</button>
+                    }
                 </div>
             </div>
+            {showModal && (
+                <Modal onClose={() => setShowModal(false)}>
+                    <listingReviews
+                </Modal>
+            )}
         )
     }
 }
