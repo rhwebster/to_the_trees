@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
-const { User, Listing, TreehouseReview, Image, sequelize } = require('../../db/models');
+const { User, Listing, TreehouseReview, Image, Reservation, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 
 router.get('/', async(req, res, next) => {
@@ -86,8 +86,9 @@ router.post('/', requireAuth, async(req, res) => {
         pricePerNight, lat, lon, previewImageId } = req.body;
 
     let newListing = await Listing.create({
-        name, address, cityState, ownerId: req.user.id, description, 
-        maxGuests, pricePerNight, lat, lon, previewImageId, rating: null
+        name, address, cityState, ownerId: req.user.id, 
+        description, maxGuests, pricePerNight, lat, lon, 
+        previewImageId, rating: null, numReviews: 0
     });
 
     res.status(200);
@@ -96,7 +97,7 @@ router.post('/', requireAuth, async(req, res) => {
 
 router.put('/:listingId', requireAuth, async(req, res)  => {
     const { name, address, cityState, description, maxGuests, 
-        pricePerNight, lat, lon, previewImageId, rating } = req.body;
+        pricePerNight, lat, lon, previewImageId, rating, numReviews } = req.body;
     
     const ownerId = req.user.id;
     const listing = await Listing.findByPk(req.params.listingId);
@@ -125,7 +126,8 @@ router.put('/:listingId', requireAuth, async(req, res)  => {
         lat: lat,
         lon: lon,
         previewImageId: previewImageId,
-        rating: rating
+        rating: rating,
+        numReviews: numReviews
     });
 
     return res.json(listing);
@@ -201,6 +203,39 @@ router.get('/:listingId/images', async(req, res) => {
     })
 
     return res.json({ Images: images });
+});
+
+router.get('/:listingId/resys', async(req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId);
+
+    if (!listing) {
+        res.status(404);
+        return res.json({
+            message: "Listing couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    if (res.user.id === listing.ownerId) {
+        const resys = await Reservation.findAll({
+            where: {
+                listingId: req.params.listingId
+            },
+            include: {
+                model: User,
+                attributes: ['id', 'name']
+            }
+        });
+        return res.json({Resys: resys});
+    } else {
+        const resys = await Reservation.findAll({
+            where: {
+                listingId: req.params.listingId
+            },
+            attributes: ['id', 'listingId', 'guestId', 'startDate', 'endDate']
+        });
+        return res.json({Resys: resys})
+    }
 });
 
 module.exports = router;

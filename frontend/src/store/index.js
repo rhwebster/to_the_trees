@@ -6,12 +6,14 @@ import sessionReducer from './session';
 import treehouseReviewReducer from './treehouseReview';
 import listingReducer from './listing';
 import guestReviewReducer from './userReview';
+import resyReducer from './reservation';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     treehouseReview: treehouseReviewReducer,
     listing: listingReducer,
     guestReview: guestReviewReducer,
+    resyReducer: resyReducer,
 });
 
 export default function configureAppStore(preloadedState) {

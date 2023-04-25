@@ -2,6 +2,18 @@ const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
 const { User, Listing, Reservation, Image } = require('../../db/models');
 const { Validator } = require('sequelize');
+const { route } = require('./listings');
+
+router.post('/', requireAuth, async(req, res) => {
+    const { startDate, endDate, numGuests, listingId, guestId } = req.body;
+
+    let newResy = await Reservation.create({
+        startDate, endDate, numGuests, listingId, guestId
+    });
+
+    res.status(200);
+    return res.json(newResy);
+});
 
 router.get('/', requireAuth, async(req, res) => {
     const resys = await Reservation.findAll({

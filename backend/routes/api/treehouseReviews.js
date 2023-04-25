@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
 const { Listing, TreehouseReview, Reservation } = require('../../db/models');
+const listing = require('../../db/models/listing');
 
 router.post('/', requireAuth, async (req, res) => {
     const { body, rating, listingId } = req.body;
@@ -46,6 +47,9 @@ router.post('/', requireAuth, async (req, res) => {
         });
     };
 
+    listing.rating = ((listing.rating*listing.numReviews)+rating)/(listing.numReviews+1);
+    listing.numReviews += 1;
+
     let review = await TreehouseReview.create({
         guestId: guestId,
         listingId: listingId,
@@ -59,6 +63,7 @@ router.post('/', requireAuth, async (req, res) => {
 
 router.put('/:reviewId', requireAuth, async(req, res) => {
     const reviewToUpdate = await TreehouseReview.findByPk(req.params.reviewId);
+    const listing = await Listing.findByPk(reviewToUpdate.listingId);
 
     if (!reviewToUpdate) {
         res.status(404);
@@ -76,6 +81,9 @@ router.put('/:reviewId', requireAuth, async(req, res) => {
         });
     };
 
+    listing.rating = ((listing.rating * listing.numReviews) 
+            - reviewToUpdate.rating + req.body.rating) / listing.numReviews;
+
     const { body, rating } = req.body;
 
     await reviewToUpdate.update({
@@ -88,6 +96,7 @@ router.put('/:reviewId', requireAuth, async(req, res) => {
 
 router.delete('/:reviewId', requireAuth, async(req, res) => {
     const review = await TreehouseReview.findByPk(req.params.reviewId);
+    const listing = await Listing.findByPk(review.listingId);
 
     if (!review) {
         res.status(404);
@@ -104,6 +113,10 @@ router.delete('/:reviewId', requireAuth, async(req, res) => {
             statusCode: 403
         });
     };
+
+    listing.rating = (((listing.rating*listing.numReviews)-review.rating) 
+                        / (listing.numReviews-1));
+    listing.numReviews -= 1;
 
     await review.destroy();
 
