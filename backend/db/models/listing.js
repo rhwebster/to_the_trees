@@ -48,11 +48,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    lat: {
+    rating: {
+      type: DataTypes.FLOAT,
+      defaultValue: null,
+    },
+    numReviews: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    lat: {
+      type: DataTypes.DECIMAL
     },
     lon: {
-      type: DataTypes.INTEGER
+      type: DataTypes.DECIMAL
     },
     previewImageId: {
       type: DataTypes.INTEGER,
