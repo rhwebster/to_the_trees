@@ -1,13 +1,16 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_RESYS = 'reservations/LOAD'
-const NEW_RESY = 'reservations/BOOK'
-const UPDATE_RESY = 'reservations/UPDATE'
 const DELETE_RESY = 'reservations/DELETE'
 
-export const getResys = (data) => ({
+const getResys = (data) => ({
     type: LOAD_RESYS,
     data
+});
+
+const removeResy = (resyId) => ({
+    type: DELETE_RESY,
+    resyId
 });
 
 export const getListingReservations = (listingId) => async (dispatch) => {
@@ -22,6 +25,51 @@ export const getListingReservations = (listingId) => async (dispatch) => {
     }
 };
 
+export const createReservation = (listingId, resy) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reservations/`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(resy)
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getListingReservations(listingId));
+        return data;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+};
+
+export const editReservation = (resyId, resy) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reservations/${resyId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(resy)
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getListingReservations(resy.listingId));
+        return data;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+};
+
+export const deleteReservation = (resyId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reservations/${resyId}`, {
+        method: 'DELETE'
+    });
+    if (res.ok) {
+        dispatch(removeResy(resyId))
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
 const initialState = {};
 
 const resyReducer = (state = initialState, action) => {
@@ -29,6 +77,11 @@ const resyReducer = (state = initialState, action) => {
         case LOAD_RESYS: {
             const resys = action.data;
             const newState = resys;
+            return newState;
+        }
+        case DELETE_RESY: {
+            const newState = { ...state };
+            delete newState[action.resyId]
             return newState;
         }
         default: {
