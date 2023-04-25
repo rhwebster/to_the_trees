@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { requireAuth } = require('../../utils/auth');
-const { User, Listing, TreehouseReview, Image, sequelize } = require('../../db/models');
+const { User, Listing, TreehouseReview, Image, Reservation, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 
 router.get('/', async(req, res, next) => {
@@ -203,6 +203,39 @@ router.get('/:listingId/images', async(req, res) => {
     })
 
     return res.json({ Images: images });
+});
+
+router.get('/:listingId/resys', async(req, res) => {
+    const listing = await Listing.findByPk(req.params.listingId);
+
+    if (!listing) {
+        res.status(404);
+        return res.json({
+            message: "Listing couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    if (res.user.id === listing.ownerId) {
+        const resys = await Reservation.findAll({
+            where: {
+                listingId: req.params.listingId
+            },
+            include: {
+                model: User,
+                attributes: ['id', 'name']
+            }
+        });
+        return res.json({Resys: resys});
+    } else {
+        const resys = await Reservation.findAll({
+            where: {
+                listingId: req.params.listingId
+            },
+            attributes: ['id', 'listingId', 'guestId', 'startDate', 'endDate']
+        });
+        return res.json({Resys: resys})
+    }
 });
 
 module.exports = router;

@@ -37,6 +37,14 @@ module.exports = (sequelize, DataTypes) => {
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
       allowNull: false
+    },
+    numReviews: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    guestRating: {
+      type: DataTypes.FLOAT,
+      defaultValue: null
     }
   }, {
     sequelize,

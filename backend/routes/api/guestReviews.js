@@ -47,12 +47,16 @@ router.post('/', requireAuth, async(req, res) => {
         ownerId: ownerId
     });
 
+    guest.guestRating = ((guest.guestRating * guest.numReviews)+rating)/(guest.numReviews+1);
+    guest.numReviews +=1;
+
     res.status(201);
     return res.json(guestReview);
 })
 
 router.put('/:guestReviewId', requireAuth, async(req, res) => {
     const reviewToUpdate = await GuestReview.findByPk(req.params.guestReviewId);
+    const guest = await User.findByPk(reviewToUpdate.guestId);
 
     if (!reviewToUpdate) {
         res.status(404);
@@ -70,6 +74,10 @@ router.put('/:guestReviewId', requireAuth, async(req, res) => {
         });
     };
 
+    guest.rating = ((guest.rating * guest.numReviews) 
+                    - reviewToUpdate.rating + req.body.rating) /
+                    guest.numReviews;
+
     const { body, rating } = req.body;
 
     await reviewToUpdate.update({
@@ -82,6 +90,7 @@ router.put('/:guestReviewId', requireAuth, async(req, res) => {
 
 router.delete('/:guestReviewId', requireAuth, async(req, res) => {
     const review = await GuestReview.findByPk(req.params.guestReviewId);
+    const guest = await User.findByPk(review.guestId);
     
     if (!reviewToUpdate) {
         res.status(404);
@@ -99,6 +108,10 @@ router.delete('/:guestReviewId', requireAuth, async(req, res) => {
         });
     };
 
+    guest.rating = (((guest.rating * guest.numReviews)-review.rating)
+                        / (guest.numReviews-1));
+                        guest.numReviews -= 1;
+                        
     await review.destroy();
 
     res.json({
