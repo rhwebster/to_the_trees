@@ -10,7 +10,7 @@ const ListingGallery = ({setShowModal, previewImage, images}) => {
     const pics = [];
     for (let pic of listingGallery) {
         pics.push({
-            pic.url
+            original: pic.url
         })
     }
 

@@ -32,7 +32,7 @@ router.post('/', requireAuth, multipleMulterUpload("images"), async (req, res) =
     });
 
     const imageUrls = await multiplePublicFileUpload(req.files);
-    const res = { "Images": [] };
+    // const res = { "Images": [] };
 
     for (const image of imageUrls) {
         const newImage = await listing.create({
