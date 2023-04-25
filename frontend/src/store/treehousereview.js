@@ -85,12 +85,12 @@ const treehouseReviewReducer = (state = initialState, action) => {
     switch (action.type) {
         case TREEHOUSE_REVIEWS: {
             const newState = {};
-            newState.listingReviews = action.data;
+            newState.treehouseReviews = action.data;
             return newState;
         }
         case DELETE_REVIEW: {
             const newState = { ...state }
-            delete newState.listingReviews[action.id];
+            delete newState.treehouseReviews[action.id];
             return newState;
         }
         default: return state;
