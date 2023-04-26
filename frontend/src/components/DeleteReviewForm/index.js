@@ -7,7 +7,7 @@ import { getOneListing } from "../../store/listing";
 
 import './index.css';
 
-const DeleteReviewForm = () => {
+const DeleteReviewForm = ({setShowDeleteForm, reviewId, listingId}) => {
     const dispatch = useDispatch();
 
     const deleteReview = () => {
