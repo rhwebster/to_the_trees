@@ -20,6 +20,13 @@ const loadImages = (data) => {
     }
 }
 
+const removeImage = (imageId) => {
+    return {
+        type: DELETE_IMAGE,
+        imageId
+    }
+}
+
 export const listingImages = (listingId) => async dispatch => {
     const res = await csrfFetch(`/api/listings/${listingId}/images`);
     const data = await res.json();
@@ -45,6 +52,21 @@ export const addImage = (imageData) => async dispatch => {
     }
 };
 
+export const deleteImage = (imageId) => async dispatch => {
+    const res = await csrfFetch(`/api/images/${imageId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        const deleteMessage = await res.json();
+        dispatch(removeImage(imageId));
+        return deleteMessage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
 const initialState = { images: {} };
 
 const imageReducer = (state = initialState, action) => {
@@ -59,6 +81,11 @@ const imageReducer = (state = initialState, action) => {
                 images: { ...state.images },
             };
             newState.images[action.image.id] = action.image;
+            return newState;
+        }
+        case DELETE_IMAGE: {
+            const newState = { ...state.images };
+            delete newState.images.imageId;
             return newState;
         }
         default: {
