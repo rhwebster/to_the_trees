@@ -83,12 +83,12 @@ router.get('/:listingId', async (req, res) => {
 
 router.post('/', requireAuth, async(req, res) => {
     const { name, address, cityState, description, maxGuests, 
-        pricePerNight, lat, lon, previewImageId } = req.body;
+        pricePerNight, previewImageId, lat, lon } = req.body;
 
     let newListing = await Listing.create({
         name, address, cityState, ownerId: req.user.id, 
-        description, maxGuests, pricePerNight, lat, lon, 
-        previewImageId, rating: null, numReviews: 0
+        description, maxGuests, pricePerNight, previewImageId,
+        lat, lon, rating: null, numReviews: 0
     });
 
     res.status(200);
