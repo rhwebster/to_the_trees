@@ -27,6 +27,13 @@ const newListing = (data) => {
     }
 }
 
+const removeListing = (listingId) => {
+    return {
+        type: REMOVE_LISTING,
+        listingId
+    }
+}
+
 export const getAllListings = () => async (dispatch) => {
     const res = await csrfFetch('/api/listings/');
     const data = await res.json();
@@ -65,6 +72,21 @@ export const createListing = (data) => async dispatch => {
     }
 }
 
+export const deleteListing = (listingId) => async dispatch => {
+    const res = await csrfFetch(`/api/listings/${listingId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        const deleteMessage = await res.json();
+        dispatch(removeListing(listingId));
+        return deleteMessage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
 const initialState = { allListings: {}, singleListing: { Images: [], Owner: {} }, userListings: {} };
 
 const listingReducer = (state = initialState, action) => {
@@ -97,6 +119,14 @@ const listingReducer = (state = initialState, action) => {
             newState.allListings[action.data.id] = action.data;
             return newState;
         };
+        case REMOVE_LISTING: {
+            const newState = { 
+                allListings: { ...state.allListings },
+                singleListing: {}
+            }
+            delete newState.allListings.listingId;
+            return newState;
+        }
         default: {
             return state
         }
