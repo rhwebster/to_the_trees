@@ -7,7 +7,7 @@ import { getOneListing } from "../../store/listing";
 
 import './index.css';
 
-const CreateReviewForm = ({listingId, setShowReviewForm}) => {
+const CreateReviewForm = ({listingId, setShowReviewForm, listing}) => {
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -15,7 +15,7 @@ const CreateReviewForm = ({listingId, setShowReviewForm}) => {
     const [body, setBody] = useState('');
     const [rating, setRating] = useState(5);
     const [validationErrrors, setValidationErrors] = useState([]);
-    const listing = await getOneListing(listingId);
+
 
     const handleValidationErrors = () => {
         const errors = [];
@@ -36,7 +36,6 @@ const CreateReviewForm = ({listingId, setShowReviewForm}) => {
         }
 
         let res = await dispatch(createTreehouseReview(listingId, data))
-        await dispatch(getOneListing(listingId));
         if (res.errors) {
             let errors = [];
             for (const err in res.errors) {
