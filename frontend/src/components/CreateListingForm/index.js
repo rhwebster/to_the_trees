@@ -15,7 +15,7 @@ const CreateListing = () => {
     const [address, setAddress] = useState('');
     const [cityState, setCityState] = useState('');
     const [desciption, setDescription] = useState('');
-    const [maxGuests, setMaxGuests] = useState(0);
+    const [maxGuests, setMaxGuests] = useState(4);
     const [pricePerNight, setPricePerNight] = useState(100);
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
@@ -26,7 +26,7 @@ const CreateListing = () => {
     const [addressErrors, setAddressErrors] = useState([]);
     const [photoErrors, setPhotoErrors] = useState([]);
     const [desciptionErrors, setDescriptionErrors] = useState([]);
-    const [pricePerNightErrors, setPricePerNightErrors] = useState([]);
+    const [priceAndGuestErrors, setPriceAndGuestErrors] = useState([]);
 
     const checker = (param) => {
         if (!param || param.length > 255) return true;
@@ -49,10 +49,12 @@ const CreateListing = () => {
         return errors;
     };
 
-    const handlePriceErrors = () => {
+    const handlePriceAndGuestErrors = () => {
         let errors = [];
         if (isNaN(pricePerNight) || pricePerNight < 1) errors.push('Please provide a price for your treehouse');
         if (pricePerNight > 10000) errors.push('Please list your treehouse at less than $10,000/night');
+        if (isNaN(maxGuests) || maxGuests < 1) errors.push('Please provide a valid number of potential guests');
+        if (maxGuests > 100) errors.push('You sure your treehouse is big enough for that many people? (maximum guests: 100)')
         return errors;
     }
 
@@ -77,13 +79,20 @@ const CreateListing = () => {
     }
 
     useEffect(() => {
-        handlePhotos();
+        handlePhotoErrors();
     }, [images]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (listingErrors.length !== 0) return
-        else {
+        e.preventDefault();;
+        setAddressErrors(handleAddressErrors());
+        setPhotoErrors(handlePhotoErrors());
+        setDescriptionErrors(handleNameAndDescriptionErrors());
+        setPriceAndGuestErrors(handlePriceAndGuestErrors());
+
+        if (addressErrors.length > 0 || photoErrors.length > 0 ||
+            desciptionErrors.length > 0 || priceAndGuestErrors.length > 0) {
+            return
+        } else {
             const data = { name, address, cityState, desciption, 
                     maxGuests, pricePerNight, lat, lon };
             const photo1 = { url: url }
@@ -109,21 +118,21 @@ const CreateListing = () => {
         }
     }
 
-    const incrementButton = (e) => {
-        if (e.target.value === pricePerNight) {
+    const incrementButton = (value) => {
+        if (value === 'price') {
             setPricePerNight(Number(pricePerNight) + 5);
         }
-        if (e.target.value === maxGuests) {
+        if (value === 'guests') {
             setMaxGuests(Number(maxGuests) + 1);
         }
     };
 
-    const decrementButton = (e) => {
-        if (e.target.value === pricePerNight) {
+    const decrementButton = (value) => {
+        if (value === 'price') {
             if (!pricePerNight || pricePerNight <= 5) setPricePerNight(0);
             if (pricePerNight > 5) setPricePerNight(Number(pricePerNight) - 5);
         }
-        if (e.target.value === maxGuests) {
+        if (value === 'guests') {
             if (!maxGuests || maxGuests <= 1) setMaxGuests(0);
             if (maxGuests > 1) setMaxGuests(Number(pricePerNight) - 1);
         }
@@ -131,13 +140,13 @@ const CreateListing = () => {
 
     const update = (e) => {
         const targetFiles = e.target.files;
-        const images = [];
+        const imageArray = [];
         setImages(targetFiles);
 
         for (const image in images) {
             images.push(URL.createObjectURL(image))
         }
-        setFiles(images)
+        setFiles(imageArray)
     };
 
     return (
@@ -159,13 +168,78 @@ const CreateListing = () => {
                                     <input className="address-input" placeholder="City, State..." id="cityState" type="text" value={cityState} onChange={(e) => setCityState(e.target.value)}></input>
                                 </div>
                             </div>
-                            {listingErrors.length > 0 && (
+                            {addressErrors > 0 && (
                                 <div className="errors">
                                     <i className="fa-solid fa-circle fa-cicle-exclamation"></i>Please fill in required fields:
                                     <ul>
-                                        {listingErrors.map(err => <li key={err}>{err}</li>)}
+                                        {addressErrors.map(err => <li key={err}>{err}</li>)}
                                     </ul>
                                 </div>
+                            )}
+                        </div>
+                        <div className="form-holder">
+                            <h4 className="form-instructions photo-section">Add some photos of your Treehouse!</h4>
+                            <h5 className="photo-directions">You'll need at least 3 photos to start. You can always add more later if you choose.</h5>
+                            <label id="upload-file-label" htmlFor="upload-image-button" className="form-instructions create-listing-photos-button">
+                                {images?.length >= 1 ? 'Change photos' : 'Upload a photo'}
+                            </label>
+                            <input type="file" multiple id="upload-image-button" accept="image/jpeg, image/png" onChange={update}></input>
+                            {files && (
+                                <div className="flex preview-img-holder">
+                                    {files.map(url => (<img className="preview-img" key={url} src={url}></img>))}
+                                </div>
+                            )}
+                            {photoErrors.length > 0 && (
+                                <div className="errors">
+                                    {photoErrors.map(err => <div key={err}><i className="fa-solid fa-circle-exclamation"></i>{err}</div>)}
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            <h4 className="form-instructions">Now let's get a name and description for your Treehouse</h4>
+                            <div className="input name-input">
+                                <label className="name-description-title" htmlFor="name">Name</label>
+                                <textarea placeholder="Sequoia Sanctuary..." className="create-text" id="name" value={name} onChange={(e) => setName(e.target.value)}/>
+                                <div className="character-count"><span>{name.length}/49</span></div>
+                            </div>
+                            <div className="input description-input">
+                                <labe className="name-description-title" htmlFor="description">Description</labe>
+                                <textarea placeholder="Beautiful spot atop the world's tallest tree..." className="create-text description" 
+                                id="description" type="text" value={desciption} onChange={(e) => setDescription(e.target.value)}/>
+                                <div className="character-count"><span>{desciption.length}/255</span></div>
+                            </div>
+                            {desciptionErrors.length > 0 && (
+                                <div className="errors">
+                                    <i className="fa-solid fa-circle-exclamation"></i>Please fill in required fields:
+                                    <ul>{desciptionErrors.map(err => <li key={err}>{err}</li>)}</ul>
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            <h4 className="form-instructions">Finally, please set your price and the maximum number of guests</h4>
+                            <div className="price-form">
+                                <div className="price-input-holder">
+                                    <div className="clicker minus" onClick={() => decrementButton('price')}> - </div>
+                                    <input className="price-input" id="price" type="number" value={pricePerNight} onChange={(e) => setPricePerNight(e.target.value)}></input>
+                                    <div className="clicker plus" onClick={() => incrementButton('price')}> + </div>
+                                </div>
+                                <div className="guest-input-holder">
+                                    <div className="clicker minus" onClick={() => decrementButton('guests')}> - </div>
+                                    <input className="guest-input" id="maxGuests" type="number" value={maxGuests} onChange={(e) => setMaxGuests(e.target.value)}></input>
+                                    <div className="clicker plus" onClick={() => incrementButton('guests')}> + </div>
+                                </div>
+                                <label className="price-label" htmlFor="price">/ per night</label>
+                            </div>
+                            {priceAndGuestErrors.length > 0 && (
+                                <div className="errors">{priceAndGuestErrors.map(err => <div key={err}><i className="fa-solid fa-circle-exclamation"></i>{err}</div>)}</div>
+                            )}
+                        </div>
+                        <div className="button-holder">
+                            {!imageLoading && (
+                                <button type="submit" className="list-button">Officially List Your Treehouse</button>
+                            )}
+                            {imageLoading && (
+                                <h2>We're Listing Your Treehouse! It'll be ready in a sec</h2>
                             )}
                         </div>
                     </form>
@@ -173,4 +247,6 @@ const CreateListing = () => {
             </div>
         </div>
     )
-}
+};
+
+export default CreateListing;
