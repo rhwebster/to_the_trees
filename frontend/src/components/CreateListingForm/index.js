@@ -16,10 +16,12 @@ const CreateListing = () => {
     const [cityState, setCityState] = useState('');
     const [desciption, setDescription] = useState('');
     const [maxGuests, setMaxGuests] = useState(0);
-    const [pricePerNight, setPricePerNight] = useState(0);
+    const [pricePerNight, setPricePerNight] = useState(100);
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
     const [images, setImages] = useState(null);
+    const [url1, setUrl1] = useState('');
+    const [files, setFiles] = useState([]);
     const [imageLoading, setImageLoading] = useState(false);
 
     const [listingErrors, setListingErrors] = useState([]);
@@ -47,9 +49,20 @@ const CreateListing = () => {
         let errors = [];
         if (!images.length) errors.push('Please upload at least one image')
         if (images.length > 10) errors.push('The maximum number of images you can upload is 10');
-        setImageErrors(errors);
+        setListingErrors(errors);
         return errors;
     };
+
+    const resetState = () => {
+        setName('');
+        setAddress('');
+        setCityState('');
+        setDescription('');
+        setMaxGuests(0);
+        setPricePerNight(100);
+        setLon(0);
+        setLat(0);
+    }
 
     useEffect(() => {
         handlePhotos();
@@ -59,29 +72,48 @@ const CreateListing = () => {
         e.preventDefault();
         if (listingErrors.length !== 0) return
         else {
-            data = { name, address, cityState, desciption, 
+            const data = { name, address, cityState, desciption, 
                     maxGuests, pricePerNight, lat, lon };
             const photo1 = { url: url }
-            listing.previewImageId = photo1.id;
-
             const newListing = await dispatch(createListing(data));
+            newListing.previewImageId = photo1.id;
             if (!images) {
                 if (photo1) {
                     setImageLoading(true);
                     const newPhoto = await dispatch(addImage(photo1));
                     setImageLoading(false);
-                    setName('');
-                    setAddress('');
-                    setCityState('');
-                    setDescription('');
-                    setMaxGuests(0);
-                    setPricePerNight(0);
-                    setLon(0);
-                    setLat(0);
+                    resetState();
                     history.push(`/listings/${newListing.id}`);
                     return newListing
+                } else {
+                    setImageLoading(true);
+                    const newPhoto = await dispatch(addImage(photo1))
+                    setImageLoading(false);
+                    resetState();
+                    history.push(`/listings/${newListing.id}`);
+                    return newListing;
                 }
             }
         }
     }
+
+    const incrementPrice = (e) => {
+        setPricePerNight(Number(pricePerNight) + 5);
+    };
+    const decrementPrice = (e) => {
+        if (!pricePerNight) return
+        if (pricePerNight <= 5) setPricePerNight(0);
+        if (pricePerNight > 5) setPricePerNight(Number(pricePerNight) - 5);
+    }
+
+    const update = (e) => {
+        const targetFiles = e.target.files;
+        const images = [];
+        setImages(targetFiles);
+
+        for (const image in images) {
+            images.push(URL.createObjectURL(image))
+        }
+        setFiles(images)
+    };
 }
