@@ -95,7 +95,7 @@ const CreateListing = () => {
         } else {
             const data = { name, address, cityState, desciption, 
                     maxGuests, pricePerNight, lat, lon };
-            const photo1 = { url: url }
+            const photo1 = { url: url1 }
             const newListing = await dispatch(createListing(data));
             newListing.previewImageId = photo1.id;
             if (!images) {
