@@ -25,6 +25,18 @@ export const getListingReservations = (listingId) => async (dispatch) => {
     }
 };
 
+export const getUserReservations = (userId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reservations/`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getResys(data));
+        return data
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
+
 export const createReservation = (listingId, resy) => async (dispatch) => {
     const res = await csrfFetch(`/api/reservations/`, {
         method: 'POST',
