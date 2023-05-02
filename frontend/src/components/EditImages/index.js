@@ -78,7 +78,7 @@ const EditImages = () => {
                                         <h5 className="cover-directions photo-directions">A cover phoot is the first impression of your Treehouse</h5>
                                         <h5 className="cover-directions photo-directions">Choose a different cover photo below</h5>
                                     </div>
-                                    <img id="cover-photo" className="preview-image edit-preview-image" src={previewImage?.url}></img>
+                                    <img id="cover-photo" className="preview-image edit-preview-image" src={previewImage?.url} alt=''></img>
                                 </div>
                                 <div className="cover-photo-directions">
                                     <h4 className="cover-main-directions form-directions photo-form">All Photos</h4>
@@ -113,7 +113,10 @@ const EditImages = () => {
                                     <>
                                         <button className="add-photos-button thirty-four" onClick={() => addImages()} type="button" disabled={disabled}>Upload Files</button>
                                         <div className="cancel-holder">
-                                                <button className="edit-photos-button cancel-upload" onClick={() => { setImages(null), setFileArray([]) }} type="button">Cancel</button>
+                                                <button className="edit-photos-button cancel-upload" onClick={() => {
+                                                    setImages(null) 
+                                                    setFileArray([])
+                                                }} type="button">Cancel</button>
                                         </div>
                                     </>
                                 )}
@@ -123,7 +126,7 @@ const EditImages = () => {
                         {(fileArray && !imageLoading) && (
                             <div className="flex preview-img-holder upload-preview-imgs-holder">
                                 {fileArray.map(url => (
-                                    <img className="preview-img" key={url} src={url}></img>
+                                    <img className="preview-img" key={url} src={url} alt=''></img>
                                 ))}
                             </div>
                         )}
