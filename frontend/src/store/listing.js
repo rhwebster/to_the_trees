@@ -87,6 +87,23 @@ export const deleteListing = (listingId) => async dispatch => {
     }
 }
 
+export const updateListing = (listingId, data) => async dispatch => {
+    const res = await csrfFetch(`/api/listings/${listingId}`, {
+        method: 'PUT',
+        header: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+        const updatedListing = await res.json();
+        dispatch(createListing(updatedListing));
+        return updatedListing;
+    } else {
+        const err = res.json();
+        return err;
+    }
+}
+
 const initialState = { allListings: {}, singleListing: { Images: [], Owner: {} }, userListings: {} };
 
 const listingReducer = (state = initialState, action) => {
