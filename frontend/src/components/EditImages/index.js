@@ -12,5 +12,27 @@ const EditImages = () => {
 
     const [showEditImages, setShowEditImages] = useState(false);
     const [images, setImages] = useState(null);
-    const [fileArray, setFileArray]
+    const [fileArray, setFileArray] = useState([]);
+    const [photoErrors, setPhotoErrors] = useState([]);
+    const [imageLoading, setImageLoading] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        handleErrors();
+    }, [images, fileArray])
+
+    const handleErrors = () => {
+        let errors = [];
+        if (!listingImages || listingImages.length < 1) {
+            errors.push(`Please upload an image`)
+            setDisabled(true)
+        } else if (listingImages.length > 10){
+            errors.push(`You cannot upload more than 10 photos. Choose wisely :)`);
+            setDisabled(true);
+        } else {
+            setDisabled(false)
+        }
+        setPhotoErrors(errors);
+        return errors;
+    };
 }
