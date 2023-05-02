@@ -27,6 +27,13 @@ const removeImage = (imageId) => {
     }
 }
 
+const changePreviewImage = (imageId) => {
+    return {
+        type: CHANGE_PREVIEW,
+        imageId
+    }
+}
+
 export const listingImages = (listingId) => async dispatch => {
     const res = await csrfFetch(`/api/listings/${listingId}/images`);
     const data = await res.json();
@@ -51,6 +58,21 @@ export const addImage = (imageData) => async dispatch => {
         return err;
     }
 };
+
+export const updateImage = (imageId) => async dispatch => {
+    const res = await csrfFetch(`/api/images/${imageId}`, {
+        method: 'PUT'
+    });
+
+    if (res.ok) {
+        const newImage = await res.json();
+        dispatch(changePreviewImage(imageId));
+        return newImage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 
 export const deleteImage = (imageId) => async dispatch => {
     const res = await csrfFetch(`/api/images/${imageId}`, {
