@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteImage, updateImage } from '../../store/image';
-import { updateListing } from '../../store/listing';
+import { getListing } from '../../store/listing';
 
 const EditImageCard = ({image}) => {
     const dispatch = useDispatch();
