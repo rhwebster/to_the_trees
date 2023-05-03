@@ -1,9 +1,8 @@
 import './index.css';
 
-const Instructions = ({currentUser. startDate, endDate, selectedDate, listing}) => {
+const Instructions = ({startDate, endDate, selectedDate, listing}) => {
     let formattedStart;
     let formattedEnd;
-    let stay;
 
     const calculateStay = (date1, date2) => {
         const millisecondsBetween = date2-date1;
