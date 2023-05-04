@@ -25,8 +25,8 @@ const GuestReviewForm = ({userId, setShowReviewForm, user}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const errors = handleValidationErrors()
-        if (errors.length) return setValidationErrors(errors);
+        const validationErrrors = handleValidationErrors()
+        if (validationErrrors.length) return setValidationErrors(validationErrrors);
 
         const data = { body: body, rating: rating };
 
@@ -57,8 +57,32 @@ const GuestReviewForm = ({userId, setShowReviewForm, user}) => {
             <div className="create-review-form-holder">
                 <form className="create-review-form" onSubmit={handleSubmit}>
                     <h4 className="create-review-title">Review {user.name}</h4>
+                    <div className="create-review-exterior">
+                        <div className="review-input">
+                            <label className="name-description-title">Review</label>
+                            <textarea className="create-text-description" id="body" value={body} onChange={(e) => setBody(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label className="rating-desciption-title">Stars</label>
+                            <div className="rating-input">
+                                <input className="stars-location-input" id="rating" type="number" value={rating} onChange={(e) => setRating(e.target.value)}></input>
+                            </div>
+                        </div>
+                        <div className="create-review-button-holder">
+                            <button type="submit" className="create-review-button">Submit Review</button>
+                        </div>
+                        {validationErrrors.length && (
+                            <ul>
+                                {validationErrrors.map(err => (
+                                    <li key={err}>{err}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </form>
             </div>
         </div>
     )
-}
+};
+
+export default GuestReviewForm;

@@ -28,8 +28,8 @@ const CreateReviewForm = ({listingId, setShowReviewForm, listing}) => {
     const handleSubmit = async (e) => {
         e.preventDefaul();
 
-        const errors = handleValidationErrors();
-        if (errors.length) return setValidationErrors(errors);
+        const validationErrrors = handleValidationErrors();
+        if (validationErrrors.length) return setValidationErrors(validationErrrors);
         const data = {
             body: body,
             rating: rating
