@@ -21,15 +21,15 @@ const CreateReviewForm = ({listingId, setShowReviewForm, listing}) => {
         const errors = [];
         if (!body.length) errors.push('Please enter a reveiw');
         if (!body.length > 255) errors.push('Exceeded maximum number of characters');
-        if (rating <= 0 || rating > 5) errors.push('Please rate between 1 and 5 stars');
+        if (isNaN(rating) || rating <= 0 || rating > 5) errors.push('Please rate between 1 and 5 stars');
         return errors;
     }
 
     const handleSubmit = async (e) => {
         e.preventDefaul();
 
-        const errors = handleValidationErrors();
-        if (validationErrrors.length) return setValidationErrors(errors);
+        const validationErrrors = handleValidationErrors();
+        if (validationErrrors.length) return setValidationErrors(validationErrrors);
         const data = {
             body: body,
             rating: rating
