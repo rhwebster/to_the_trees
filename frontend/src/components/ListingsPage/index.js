@@ -19,8 +19,8 @@ const Listings = () => {
     };
 
     return (
-        <div className="flex container">
-            <div className="grid listings-page">
+        <div className="flex outer-container">
+            <div id="listing-grid" className="grid listings-page">
                 {
                     listingsArr.map(listing => (
                         <SingleListingCard key={listing.id} listing={listing} />

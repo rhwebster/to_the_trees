@@ -1,0 +1,60 @@
+.info-holder {
+    justify-content: center;
+    width: 80%;
+}
+
+.title-card {
+    font-size: 1.25em;
+}
+
+#title {
+    margin-bottom: .5em;
+}
+
+.title-lower {
+    justify-content: space-between;
+    font-size: .75em;
+    width: 50%;
+}
+
+.title-lower h4 {
+    margin: 0;
+}
+
+.edit-button {
+    display: flex;
+    align-items: center;
+}
+
+.display-info {
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+    margin: 0;
+    border-bottom: 1px solid #ebebeb;
+}
+
+#user-info {
+    padding-bottom: .75em;
+    font-size: 1em;
+}
+
+#user-info p {
+    font-size: 15px;
+}
+
+.show-all-reviews, .review-button {
+    border: 1px solid black;
+    background-color: white;
+    margin: 0;
+    width: 25%;
+    height: 3em;
+    border-radius: .5em;
+    margin-bottom: 2em;
+    margin-right: 2em;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.show-all-reviews:hover, .review-button:hover {
+    background-color: #ebebeb;
+}

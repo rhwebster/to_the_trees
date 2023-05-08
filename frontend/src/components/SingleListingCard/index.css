@@ -1,0 +1,56 @@
+.listing-card-top {
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.listing-image-holder {
+    display: flex;
+    justify-content: center;
+}
+
+.listing-card-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.listing-info {
+    justify-content: space-between;
+    padding-bottom: 1em;
+    padding-top: .75em;
+}
+
+.listing-info .fa-star {
+    font-size: 1em;
+    padding-right: .5em;
+    align-self: center;
+}
+
+.black.right.flex {
+    padding-right: .25em;
+}
+
+img.listing-image {
+    width: 20em;
+    height: 15em;
+    border-bottom: .75em;
+    object-fit: cover;
+}
+
+a {
+    text-decoration: none;
+    height: fit-content;
+    width: fit-content;
+}
+
+.bold {
+    font-weight: 750;
+    color: #222222;
+}
+
+.light {
+    font-weight: 100;
+    color: #222222;
+}

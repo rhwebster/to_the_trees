@@ -1,0 +1,25 @@
+#listing-grid {
+    margin: 3% auto;
+    margin-left: 3.7em;
+    margin-right: 3.7em;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 1.5em;
+    grid-row-gap: 3em;
+    padding: 0;
+    width: fit-content;
+}
+
+.outer-container {
+    justify-content: center;
+}
+
+@media screen and (max-width: 1200px) {
+    #landing-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }    
+
+    img.listing-page-image {
+        height: 20em;
+        width: 20em;
+    }
+}
