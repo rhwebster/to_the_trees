@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import Calendar from 'react-calendar';
 
 import { Modal } from '../../../context/Modal';
@@ -16,7 +15,6 @@ import Instructions from '../ReservationInstructions';
 const ListingReservations = ({listing, formatRating}) => {
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const resys = useSelector(state => state.reys)
     const user = useSelector(state => state.session.user)
 
@@ -33,9 +31,9 @@ const ListingReservations = ({listing, formatRating}) => {
     },[dispatch])
 
     useEffect(() => {
-        for(let id in bookings) {
-            const startDate = bookings[id].startDate;
-            const endDate = bookings[id].endDate;
+        for(let id in resys) {
+            const startDate = resys[id].startDate;
+            const endDate = resys[id].endDate;
 
             if (isBetweenDates(startDate, selectedDate[0], selectedDate[1]) || 
                 isBetweenDates(endDate, selectedDate[0], selectedDate[1])) {
@@ -73,9 +71,9 @@ const ListingReservations = ({listing, formatRating}) => {
             date.getFullYear() === today.getFullYear()) {
                 return true;
             }
-        for (let id in bookings) {
-            const start = bookings[id].startDate
-            const end = bookings[id].endDate
+        for (let id in resys) {
+            const start = resys[id].startDate
+            const end = resys[id].endDate
             if (isBetweenDates(date, start, end)) return true;
         } return false;
     }
@@ -100,7 +98,7 @@ const ListingReservations = ({listing, formatRating}) => {
 
     const selectDates = (val, e) => {
         if (!startDate) setStartDate(new Date(val))
-        if (startDate && startDate < new Date(val)) setEndDate(new Date(vale))
+        if (startDate && startDate < new Date(val)) setEndDate(new Date(val))
         if (startDate && startDate > new Date(val)) {
             setEndDate(startDate);
             setStartDate(new Date(val))
