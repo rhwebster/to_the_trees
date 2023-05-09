@@ -1,7 +1,7 @@
 import './index.css';
 import { calculateStay } from '../../../helpers';
 
-const Instructions = ({startDate, endDate, selectedDate, listing}) => {
+const Instructions = ({user, startDate, endDate, selectedDate, listing}) => {
     let formattedStart;
     let formattedEnd;
 

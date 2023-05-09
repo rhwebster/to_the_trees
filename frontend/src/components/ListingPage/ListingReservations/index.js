@@ -11,6 +11,7 @@ import { isBetweenDates, calculateStay } from '../../../helpers';
 import 'index.css';
 
 import Confirmation from './confirmation';
+import Instructions from '../ReservationInstructions';
 
 const ListingReservations = ({listing, formatRating}) => {
 
@@ -131,7 +132,73 @@ const ListingReservations = ({listing, formatRating}) => {
         }
     }
 
-    return ()
+    return (
+        <div className='resy-card-holder'>
+            <div id='calendar-container'>
+                <Instructions user={user} startDate={startDate} endDate={endDate} selectedDate={selectedDate} listing={listing}/>
+                <Calendar className={'react-calendat'} value={selectedDate} onChange={setSelectedDate} onClickDay={selectDates}
+                    showDoubleView={false} showFixedNumberOfWeeks={false} minDate={new Date()} minDetail={'month'} selectRange={true}
+                    goToRangeStartOnSelect={true} tileDisabled={booked} returnValue={'range'} next2Label={null} prev2Label={null}
+                    showNeighboringMonth={false}/>
+                <div className='clear-dates-holder'>
+                    <button className='clear-dates-button' type='button' onClick={clearDates}>Clear Dates</button>
+                </div>
+            </div>
+            <div className='resy-card'>
+                <div className='resy-card-top'>
+                    <div>
+                        <span className='price-per-night'>${listing.pricePerNight}</span>
+                    </div>
+                    <div className='align-bottom'>
+                        <h6>
+                            <i className='fa-solid fa-star'/>{formatRating}
+                            <span> - </span>
+                            {listing.numReviews} {listing.numReviews !== 1 ? `reviews` : `review`}
+                        </h6>
+                    </div>
+                </div>
+                <form className='resy-form' onSubmit={handleSubmit}>
+                    <div className='date-picker'>
+                        <div className='left-input'>
+                            <label>Check In</label>
+                            <input disabled className='date-display date-checkin' value={startDate ? formateDate(startDate) : 'Select date on calendar'}></input>
+                        </div>
+                        <div className='right-input'>
+                            <label>Check Out</label>
+                            <input disabled className='date-display date-checkout' value={endDate ? formateDate(endDate) : 'Select date on calendar'}></input>
+                        </div>
+                    </div>
+                    <button className='resy-button login-button' type='submit' disabled={disabled}>{setSelectedDate ? `Book` : `Selection Reservation`}</button>
+                    {showLoginModal && (
+                        <Modal onClose={() => setShowLoginModal(false)}>
+                            <LoginForm setShowLoginModal={setShowLoginModal}/>
+                        </Modal>
+                    )}
+                    {showConfirmationModal && (
+                        <Modal onClose={() => setShowConfirmationModal(false)}>
+                            <Confirmation setShowConfirmationModal={setShowConfirmationModal} listing={listing}/>
+                        </Modal>
+                    )}
+                    {errors && errors.map(err => (
+                        <div className='errors'>{err}</div>
+                    ))}
+                </form>
+                {(setSelectedDate && !errors.length) && (
+                    <>
+                    <div className='not-charged'>You will not be charged yet</div>
+                    <div className='flex price-calculator'>
+                        <div className='price-underline'>${listing.pricePerNight} x {calculateStay(selectedDate[0], selectedDate[1])} night</div>
+                        <div>${formatPrice(listing.pricePerNight*calculateStay(selectedDate[0], selectedDate[1]))}</div>
+                    </div>
+                    <div className='flex total-estimate'>
+                        <div>Estimated Total</div>
+                        <div>${formatPrice(listing.pricePerNight*calculateStay(selectedDate[0], selectedDate[1]))}</div>
+                    </div>
+                    </>
+                )}
+            </div>
+        </div>
+    )
 };
 
 export default ListingReservations;
