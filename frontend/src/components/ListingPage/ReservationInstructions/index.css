@@ -1,0 +1,15 @@
+#resy-card-holder h2 {
+    margin-bottom: 0;
+}
+
+#resy-card-holder {
+    font-size: 1em;
+}
+
+#resy-card-holder p {
+    margin-top: .5em;
+    margin-left: 0;
+    color: #807d7d;
+    font-size: 12px;
+    font-weight: normal;
+}
