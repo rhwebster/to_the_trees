@@ -17,3 +17,114 @@
     text-decoration: underline;
     border: none;
 }
+
+.resy-card {
+    border: 1px solid rgb(221, 221, 221);
+    margin-left: 100px;
+    margin-top: 90px;
+    padding: 24px;
+    width: 350px;
+    height: fit-content;
+    border-radius: 1em;
+    box-shadow: 0px 5px 30px -5px #c6bdba;
+}
+
+.resy-card-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.price-per-night {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.align-bottom {
+    display: flex;
+    align-items: flex-end;
+}
+
+.align-bottom h6 {
+    margin: 0;
+    font-size: 12px;
+}
+
+.resy-form {
+    width: 100%;
+}
+
+.date-picker {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #c3c3c3;
+    border-radius: .5em;
+    box-sizing: border-box;
+}
+
+.left-input {
+    border-right: 1px solid #c3c3c3;
+    padding: 10px;
+}
+
+.right-input {
+    padding: 10px;
+}
+
+.date-picker label {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bolder;
+    margin-left: 2px;
+}
+
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-display {
+    width: 90%;
+    border: none;
+    font-size: 12px;
+}
+
+.date-display:focus {
+    outline: none;
+}
+
+.resy-button {
+    width: 100%;
+    margin: 0;
+}
+
+.resy-button:disabled {
+    cursor: not-allowed;
+    background-color: #c3c3c3;
+}
+
+.not-charged {
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #1a1a1ad1;
+}
+
+.price-calculator {
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.price-underline {
+    text-decoration: underline;
+}
+
+.total-estimate {
+    border-top: 1px solid rgb(221, 221, 221);
+    justify-content: space-between;
+    padding-top: 15px;
+    font-weight: bold;
+}
