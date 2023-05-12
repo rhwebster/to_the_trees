@@ -1,0 +1,85 @@
+.review-card {
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.review-text {
+    width: 100%;
+    word-break: break-word;
+}
+
+.user-info {
+    height: 2em;
+}
+
+#review-icon {
+    font-size: 2.5em;
+}
+
+h4#username,
+h5#review-date {
+    margin: 0;
+}
+
+.username-holder {
+    padding-left: .75em;
+    width: 100%;
+}
+
+.delete-review-button-modal {
+    background-color: white;
+    border: 1px solid #ebebeb;
+    width: 30%;
+    height: 2em;
+    border-radius: 3em;
+    margin: 0;
+    padding: 0;
+    justify-self: flex-end;
+    cursor: pointer;
+}
+
+.button-holder-modal {
+    width: 30%;
+    justify-self: flex-end;
+    padding-right: 5em;
+}
+
+.show-more-button-modal {
+    padding-bottom: 1em;
+    display: flex;
+    height: 1em !important;
+    overflow: visible !important;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.delete-review-button-modal:hover {
+    box-shadow: 0px 3px 3px #ebebeb;
+}
+
+.review-holder-modal {
+    padding-top: 1.5em;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.review-holder-modal div {
+    width: 95%;
+    font-weight: 100;
+    font-size: 80%;
+    line-height: 2;
+    height: fit-content;
+    color: #3f3f3f;
+    margin-bottom: .5em;
+}
+
+#review-date {
+    color: #979797;
+    font-weight: lighter;
+}
