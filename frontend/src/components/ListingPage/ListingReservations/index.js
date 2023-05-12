@@ -134,7 +134,7 @@ const ListingReservations = ({listing, formatRating}) => {
         <div className='resy-card-holder'>
             <div id='calendar-container'>
                 <Instructions user={user} startDate={startDate} endDate={endDate} selectedDate={selectedDate} listing={listing}/>
-                <Calendar className={'react-calendat'} value={selectedDate} onChange={setSelectedDate} onClickDay={selectDates}
+                <Calendar className={'react-calendar'} value={selectedDate} onChange={setSelectedDate} onClickDay={selectDates}
                     showDoubleView={false} showFixedNumberOfWeeks={false} minDate={new Date()} minDetail={'month'} selectRange={true}
                     goToRangeStartOnSelect={true} tileDisabled={booked} returnValue={'range'} next2Label={null} prev2Label={null}
                     showNeighboringMonth={false}/>
