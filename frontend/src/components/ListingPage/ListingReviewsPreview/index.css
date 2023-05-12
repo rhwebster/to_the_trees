@@ -1,0 +1,12 @@
+.display-title {
+    font-size: 1em;
+}
+
+.reviews-preview-holder {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 50em;
+}
