@@ -1,0 +1,72 @@
+.review-preview-card {
+    width: 50%;
+    height: 20%;
+    box-sizing: border-box;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.user-info {
+    height: 2em;
+}
+
+#review-icon {
+    font-size: 2.5em;
+}
+
+h4#username,
+h5#review-date {
+    margin: 0;
+}
+
+.name-holder {
+    padding-left: .75em;
+    width: 100%;
+}
+
+.delete-review {
+    background-color: white;
+    border: 1px solid #ebebeb;
+    width: 100%;
+    height: fit-content;
+    border-radius: 3em;
+    margin: 0;
+    padding: 0;
+    justify-self: flex-end;
+    cursor: pointer;
+    word-break: keep-all;
+}
+
+#button-holder {
+    width: 30%;
+    justify-self: flex-end;
+    padding-right: 5em;
+}
+
+.showmore {
+    padding-bottom: 1em;
+    display: flex;
+    height: 1em !important;
+    overflow: visible !important;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.delete-review:hover {
+    box-shadow: 0px 3px 3px #ebebeb;
+}
+
+.review-holder div {
+    width: 85%;
+    font-weight: 100;
+    height: 75px;
+    color: #1d1d1d;
+    margin-bottom: .5em;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+#date {
+    color: #979797;
+    font-weight: lighter;
+}
