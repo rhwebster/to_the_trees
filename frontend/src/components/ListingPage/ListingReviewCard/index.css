@@ -1,9 +1,16 @@
-.review-preview-card {
-    width: 50%;
-    height: 20%;
+.review-card {
+    width: 100%;
+    height: fit-content;
     box-sizing: border-box;
     margin-top: 1em;
     margin-bottom: 1em;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.review-text {
+    width: 100%;
+    word-break: break-word;
 }
 
 .user-info {
@@ -19,31 +26,30 @@ h5#review-date {
     margin: 0;
 }
 
-.name-holder {
+.username-holder {
     padding-left: .75em;
     width: 100%;
 }
 
-.delete-review {
+.delete-review-button-modal {
     background-color: white;
     border: 1px solid #ebebeb;
-    width: 100%;
-    height: fit-content;
+    width: 30%;
+    height: 2em;
     border-radius: 3em;
     margin: 0;
     padding: 0;
     justify-self: flex-end;
     cursor: pointer;
-    word-break: keep-all;
 }
 
-#button-holder {
+.button-holder-modal {
     width: 30%;
     justify-self: flex-end;
     padding-right: 5em;
 }
 
-.showmore {
+.show-more-button-modal {
     padding-bottom: 1em;
     display: flex;
     height: 1em !important;
@@ -52,21 +58,28 @@ h5#review-date {
     justify-content: space-between;
 }
 
-.delete-review:hover {
+.delete-review-button-modal:hover {
     box-shadow: 0px 3px 3px #ebebeb;
 }
 
-.review-holder div {
-    width: 85%;
-    font-weight: 100;
-    height: 75px;
-    color: #1d1d1d;
-    margin-bottom: .5em;
-    overflow: hidden;
-    word-break: break-all;
+.review-holder-modal {
+    padding-top: 1.5em;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
-#date {
+.review-holder-modal div {
+    width: 95%;
+    font-weight: 100;
+    font-size: 80%;
+    line-height: 2;
+    height: fit-content;
+    color: #3f3f3f;
+    margin-bottom: .5em;
+}
+
+#review-date {
     color: #979797;
     font-weight: lighter;
 }
