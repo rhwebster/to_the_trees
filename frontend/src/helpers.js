@@ -26,3 +26,9 @@ export const calculateStay = (date1, date2) => {
     const daysBetween = millisecondsBetween / 86400000;
     return Math.floor(daysBetween)
 };
+
+export const getMonth = (string) => {
+    const date = new Date(string)
+    let month = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric'}).format(date);
+    return month;
+}
