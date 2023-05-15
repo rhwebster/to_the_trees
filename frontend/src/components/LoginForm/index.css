@@ -1,9 +1,9 @@
-.form-card.signup {
+.form-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 35em;
-    height: 35em;
+    height: fit-content;
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -13,7 +13,16 @@
     justify-content: space-between;
 }
 
-.signup-exit-holder {
+.circle {
+    border-radius: 100%;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: flex;
+    margin-bottom: .5em;
+}
+
+.exit-holder {
     height: 12.5%;
     width: 100%;
     padding-left: 1.5em;
@@ -22,24 +31,14 @@
     display: flex;
 }
 
-.circle.signup {
-    border-radius: 100%;
-    width: 2em;
-    height: 2em;
-    cursor: pointer;
+.exit-holder h4 {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-bottom: .25em;
-}
-
-.signup-exit-holder h4 {
     justify-self: center;
     margin-bottom: 0;
     margin-top: .25em;
 }
 
-.signup-form {
+.login-form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -49,21 +48,21 @@
     width: 90%;
 }
 
-.form-holder.signup {
+.form-holder {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 90%;
 }
 
-.signup-header {
+.login-header {
     font-size: 1.5em;
     margin: 0;
     margin-bottom: .5em;
     margin-top: .75em;
 }
 
-.signup-input {
+.login-input {
     border: 1px solid rgba(0, 0, 0, 0);
     margin-bottom: .25em;
     padding-left: .5em;
@@ -71,35 +70,29 @@
     overflow-x: auto;
 }
 
-.signup-input:focus {
+.login-input:focus {
     outline: none;
 }
 
-.input-fields#confirm-password {
+.input-fields.confirm {
     border-bottom: rgba(0, 0, 0, 0);
     height: 4em;
 }
 
-#confirm-password.singup-input {
-    margin-bottom: 0;
-    border: hidden;
-    outline: 1px solid rgba(0, 0, 0, 0);
-}
-
-.signup-exterior {
+.login-exterior {
     width: 100%;
     border: 1px solid #b0b0b0;
     border-radius: 1em;
 }
 
-.button-holder.signup {
+.button-holder {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     margin-bottom: 2em;
 }
 
-.signup-button {
+.login-button {
     border: none;
     background-color: #d70465;
     color: white;
@@ -111,8 +104,8 @@
     cursor: pointer;
 }
 
-.signup-button:hover {
-    background-color: #e61c4e
+.login-button:hover {
+    background-color: #e61c4e;
 }
 
 h4 {
@@ -138,3 +131,4 @@ button {
     width: 75%;
     margin-left: 2em;
 }
+

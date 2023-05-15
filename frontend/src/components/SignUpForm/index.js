@@ -38,7 +38,7 @@ const SignupForm = ({setShowSignUpModal}) => {
     };
 
     return (
-        <div className='form-card'>
+        <div className='form-card signup'>
             <div className='signup-exit-holder'>
                 <div className='halfwidth flex'>
                 <div onClick={() => setShowSignUpModal(false)} className='circle signup'>
@@ -47,7 +47,7 @@ const SignupForm = ({setShowSignUpModal}) => {
                 <h4>Sign Up</h4>
                 </div>
             </div>
-            <div className='form-holder'>
+            <div className='form-holder signup'>
                 <form className='signup-form' onSubmit={handleSubmit}>
                     <h4 className='signup-header'>Welcome to ToTheTrees: The best treehouses await</h4>
                     <div className='signup-exterior'>
@@ -68,14 +68,14 @@ const SignupForm = ({setShowSignUpModal}) => {
                             <input className='signup-input' type='text' value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className='input-fields'>
-                            <label className='label' id='confirm password'>Confirm Password</label>
+                            <label className='label' id='confirm-password'>Confirm Password</label>
                             <input className='signup-input' type='text' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                         </div>
                     </div>
                     <ul>
                         {errors && errors.map((err, i) => <li key={i}>{err}</li>)}
                     </ul>
-                    <div className='button-holder'>
+                    <div className='button-holder signup'>
                         <input type='submit' className='signup-button'>Sign Up</input>
                     </div>
                 </form>

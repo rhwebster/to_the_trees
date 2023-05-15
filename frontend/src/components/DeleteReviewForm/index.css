@@ -1,0 +1,48 @@
+.delete-review-holder {
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+
+.circle.delete-review {
+    border-radius: 100%;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: .5em;
+}
+
+.delete-review.signup-exit-holder {
+    padding-left: .5em;
+    width: auto;
+}
+
+.delete-review-bottom-nav {
+    padding-left: 1em;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    height: 3em;
+}
+
+.delete-review-button {
+    border: 1px solid black;
+    background-color: rgba(0, 0, 0, .75);
+    color: white;
+    margin: 0;
+    width: 50%;
+    height: 2em;
+    border-radius: .5em;
+    margin-bottom: 2em;
+    margin-right: 2em;
+    font-size: 1em;
+    cursor: pointer;
+    padding: 0;
+}
+
+.delete-review-button:hover {
+    background-color: #000000;
+}

@@ -146,7 +146,7 @@ const EditReservation = () => {
     }
 
     return (
-        <div className='flex outer-container edit-booking'>
+        <div className='flex outer-container edit-reservation'>
             <div className='edit-title-holder'>
             <h1 className='edit-title'>Edit Your Reservation</h1><Link to='/reservations'>Back</Link>
             </div>

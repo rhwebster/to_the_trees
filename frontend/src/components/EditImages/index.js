@@ -65,14 +65,14 @@ const EditImages = () => {
             {showEditImages && (
                 <div className="edit-photos-main">
                     {listingImages && (
-                        <div className="bottom-border prevoew-image-holder current-photos">
+                        <div className="bottom-border preview-image-holder current-photos">
                             <div className="current-photos-title">
                                 <div onClick={() => setShowEditImages(false)} className="close-photos circle">
                                     <i className="fa-solid fa-xmark"></i>
                                 </div>
                             </div>
                             <div className="current-photos-holder">
-                                <div className="cover-phoot-holder">
+                                <div className="cover-photo-holder">
                                     <div className="cover-photo-directions">
                                         <h4 className="cover-main-directions form-directions photo-form">Cover Photo</h4>
                                         <h5 className="cover-directions photo-directions">A cover phoot is the first impression of your Treehouse</h5>
