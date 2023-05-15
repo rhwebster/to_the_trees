@@ -23,7 +23,7 @@ const Reservations = () => {
     const upcoming = reservationArr.filter(resy => (new Date() - new Date(resy.startDate)) < 0);
 
     return loaded ? (
-        <div className="flex cneter">
+        <div className="flex center">
             <div className="details-main-holder">
                 <h2>Upcoming Reservations</h2>
                 <div className="current-reservations-holder">
