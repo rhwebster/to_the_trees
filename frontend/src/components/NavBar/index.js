@@ -10,7 +10,7 @@ function NavBar({ isLoaded }) {
         <div className='flex navbar'>
             <div className='flex center mini'>
                 <div>
-                    <NavLink exact to='/'></NavLink>
+                    <NavLink exact to='/' className='logo'></NavLink>
                 </div>
             </div>
         </div>
