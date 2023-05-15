@@ -13,7 +13,7 @@ const DeleteReservationForm = ({setShowDeletReservation, showDeleteReservation, 
     });
 
     return (
-        <div className="delete-review-holder delete-booking">
+        <div className="delete-review-holder delete-reservation">
             <div className="delete-review signup-exit-holder">
                 <div onClick={() => setShowDeletReservation(false)} className="circle delete-review">
                 <i id="exit-reviews" className="fa-solid fa-xmark"></i>
