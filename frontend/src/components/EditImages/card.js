@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteImage, updateImage } from '../../store/image';
 import { getListing } from '../../store/listing';
 
+import './index.css';
+
 const EditImageCard = ({image}) => {
     const dispatch = useDispatch();
     const listingImages = useSelector(state => state.listings.singleListing.Images)
