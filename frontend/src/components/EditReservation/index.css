@@ -1,0 +1,22 @@
+.edit-reservation {
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-title-holder {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 25px;
+    padding-bottom: 40px;
+}
+
+.edit-title {
+    margin-top: 40px;
+    margin-bottom: 0;
+}
