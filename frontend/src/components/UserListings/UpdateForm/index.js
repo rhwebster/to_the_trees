@@ -141,7 +141,7 @@ const UpdateListingForm = () => {
                                 <h4 className="form-directions">Treehouse Name and Description</h4>
                                 <div className="input description-input">
                                     <label className="name-description-title" htmlFor="name">Name</label>
-                                    <textarea placeholder="Sequoia Sanctuary..." className="create-text" id="name" 
+                                    <textarea placeholder="Sequoia Sanctuary..." className="create-text name" id="name" 
                                                 typeof="text" value={name} onChange={(e) => setName(e.target.value)}/>
                                     <div className="character-counter">
                                         {name && <span>{name.length}/49</span>}
@@ -149,7 +149,7 @@ const UpdateListingForm = () => {
                                 </div>
                                 <div className="input description-input">
                                     <label className="name-description-title" htmlFor="description">Descibe your Treehouse</label>
-                                    <textarea placeholder="Beautiful spot atop the world's tallest tree..." className="create-text" 
+                                    <textarea placeholder="Beautiful spot atop the world's tallest tree..." className="create-text description" 
                                                 id="description" typeof="text" value={desciption} onChange={(e) => setDescription(e.target.value)}/>
                                     <div className="character-counter">
                                         {desciption && <span>{desciption.length}/255</span>}

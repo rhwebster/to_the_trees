@@ -1,0 +1,173 @@
+input[type="number"] {
+    -moz-appearance: textfield;
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.create-listing-exterior-flex {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10em;
+}
+
+.create-listing-exterior-holder {
+    justify-content: center;
+    width: 80%;
+}
+
+.formholder {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.create-listing-form {
+    width: 50%;
+}
+
+.location-form {
+    border: 1px solid #b0b0b0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+}
+
+.form-directions {
+    font-size: 1.5em;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #b0b0b0;
+}
+
+.location-label {
+    font-size: .75em;
+    color: rgba(0, 0, 0, .5);
+    padding: 0;
+    padding-left: .5em;
+    padding-top: .5em;
+    margin: 0;
+}
+
+.location-input {
+    border: none;
+    margin-bottom: .25em;
+    padding-left: .5em;
+    font-size: 1.25em;
+    overflow-x: auto;
+}
+
+.location-input:focus {
+    outline: none;
+}
+
+.input-description-input {
+    border: none;
+}
+
+.name-description-title {
+    font-size: 1em;
+    padding-left: .6em;
+    padding-bottom: .6em;
+}
+
+.create-text {
+    border: 1px solid #b0b0b0;
+    border-radius: .5em;
+    height: 5em;
+    font-size: 2em;
+    padding-top: .5em;
+    padding-left: .75em;
+}
+
+.create-text.descrition {
+    font-size: 1em;
+    height: 10em;
+}
+
+.create-text:focus {
+    outline: none;
+}
+
+.character-counter {
+    font-size: .75em;
+}
+
+.price-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.price-input-holder {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.price-clicker {
+    border: 1px solid #b0b0b0;
+    border-radius: 100%;
+    height: 2em;
+    width: 2em;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.price-clicker:hover {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.price-input {
+    border: 1px solid #b0b0b0;
+    border-radius: .5em;
+    font-size: 2em;
+    height: 2em;
+}
+
+.price-input:focus {
+    outline: none;
+}
+
+.button-holder {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2em;
+}
+
+.submit-button {
+    border: 1px solid black;
+    background-color: white;
+    margin: 0;
+    width: 30%;
+    height: 3em;
+    border-radius: .5em;
+    margin-bottom: 2em;
+    margin-right: 2em;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #ebebeb6b;
+}
+
+.errors {
+    margin-top: 1em;
+}
+
+.errors,
+.errors ul {
+    color: #c43f21;
+}
