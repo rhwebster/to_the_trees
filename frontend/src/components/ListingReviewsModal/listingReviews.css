@@ -1,0 +1,74 @@
+.reviews-holder {
+    display: flex;
+    flex-direction: column;
+    height: 36em;
+    width: 60em;
+    border-radius: 3em;
+    overflow-x: hidden;
+}
+
+body.modal-open {
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+.exit-holder {
+    height: 12.5%;
+    padding-left: 1.5em;
+    padding-top: 1em;
+}
+
+.reviews-circle:hover {
+    background-color: #ebebeb89;
+}
+
+.reviews-circle {
+    border-radius: 100%;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#exit-reviews {
+    padding-left: .75em;
+    padding-top: .5em;
+}
+
+.reviews-content {
+    display: flex;
+    overflow: auto;
+    margin-top: 2em;
+}
+
+.left-holder {
+    width: fit-content;
+}
+
+.reviews-title {
+    font-size: 2em;
+    margin: 0;
+    padding-left: 1em;
+}
+
+.star-holder {
+    width: 1em;
+    height: 1em;
+    display: inline;
+    margin: 0;
+}
+
+.review-star-big {
+    font-size: .66666667em;
+    position: relative;
+    bottom: 5px;
+}
+
+.reviews-container {
+    width: 60%;
+    margin-left: 5em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
