@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTreehouseReviews } from "../../store/treehouseReview";
 import ListingReviewCard from '../ListingPage/ListingReviewCard';
 
-import './ListingReviews.css';
+import './listingReviews.css';
 
 const ListingReviews = ({ listingId, rating, setShowModal}) => {
     const dispatch = useDispatch();
