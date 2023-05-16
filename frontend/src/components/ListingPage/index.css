@@ -42,7 +42,8 @@
     font-size: 15px;
 }
 
-.show-all-reviews, .review-button {
+.show-all-reviews, 
+.review-button {
     border: 1px solid black;
     background-color: white;
     margin: 0;
@@ -55,6 +56,7 @@
     cursor: pointer;
 }
 
-.show-all-reviews:hover, .review-button:hover {
+.show-all-reviews:hover, 
+.review-button:hover {
     background-color: #ebebeb;
 }
