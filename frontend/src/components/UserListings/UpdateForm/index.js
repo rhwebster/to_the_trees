@@ -6,6 +6,7 @@ import { updateListing, getOneListing } from "../../../store/listing";
 
 import DeleteListingModal from "../../DeleteListing/modal";
 import EditImages from "../../EditImages";
+import './index.css';
 
 const UpdateListingForm = () => {
     const dispatch = useDispatch();
