@@ -1,0 +1,75 @@
+#profile-button {
+    background-color: white;
+    border: 1px solid #ebebeb;
+    border-radius: 3em;
+    height: 2.5em;
+    width: 4.5em;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.menu-open {
+    box-shadow: 0px 5px 5px #ebebeb;
+}
+
+#host-button {
+    border-bottom: 1px solid #ebebeb;
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 5%;
+    top: 4em;
+    padding-right: 0;
+    padding-left: 0;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    background-color: white;
+    border: 1px solid #ebebeb;
+    border-radius: 1em;
+    width: 15em;
+    box-shadow: 0px 0px 5px 1px #ebebeb;
+    cursor: default;
+}
+
+.profile-dropdown li {
+    width: 100%;
+    padding-top: .75em;
+    padding-bottom: .75em;
+    cursor: pointer;
+}
+
+.profile-dropdown button {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+#username-splash,
+#username-splash button {
+    cursor: default;
+}
+
+#username-splash:hover,
+#username-splash button:hover {
+    background-color: white;
+}
+
+.profile-dropdown li:hover {
+    background-color: #ebebeb75;
+}
+
+.fa-circle-user {
+    font-size: 1.75em;
+}
+
+.menu {
+    padding-left: .5em;
+    font-size: 1em;
+}
+
+#profile-button:hover {
+    box-shadow: 0px 5px 5px #ebebeb;
+    cursor: pointer;
+}
