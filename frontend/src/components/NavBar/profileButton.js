@@ -78,7 +78,7 @@ const ProfileButton = ({ user }) => {
                                     <button>Upcoming Reservations</button>
                                 </li>
                             </Link>
-                            <li onClick={logout}>
+                            <li onClick={logOut}>
                                 <button>Log Out</button>
                             </li>
                         </ul>
